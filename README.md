@@ -28,7 +28,30 @@ Saving to: “uniprot_sprot.fasta.gz”
 -rw-r--r-- 1 dbarshis users  86M Feb 10 10:00 uniprot_sprot_Mar2021.fasta.gz
 
 ####TrEMBL
+[dbarshis@coreV2-22-007 databases]$ wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz
+--2021-03-15 23:27:54--  https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz
+Resolving ftp.uniprot.org... 141.161.180.197
+Connecting to ftp.uniprot.org|141.161.180.197|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 49680333407 (46G) [application/x-gzip]
+Saving to: “uniprot_trembl.fasta.gz”
 
+100%[==================================================================================>] 49,680,333,407 18.3M/s   in 44m 25s 
+
+2021-03-16 00:12:19 (17.8 MB/s) - “uniprot_trembl.fasta.gz” saved [49680333407/49680333407]
+[dbarshis@coreV2-22-007 databases]$ mv uniprot_trembl.fasta.gz uniprot_trembl_Mar2021.fasta.gz
+[dbarshis@coreV2-22-007 databases]$ cat djbUnzipTrembl.sh 
+#!/bin/bash -l
+
+#SBATCH -o TrEMBLUnzip.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=TrEMBLUnzip
+
+gunzip -c uniprot_trembl_Mar2021.fasta.gz > uniprot_trembl_Mar2021.fasta
+[dbarshis@coreV2-22-007 databases]$ sbatch djbUnzipTrembl.sh 
+Submitted batch job 9287069
 
 ####nr
 #testing
@@ -47,4 +70,28 @@ Saving to: “uniprot_sprot.fasta.gz”
 
 curl "https://ftp.ncbi.nlm.nih.gov/blast/db/nr.[0-4][0-9].tar.gz" -o "nr.#1#2.tar.gz"
 [dbarshis@coreV3-23-035 databases]$ sbatch djbNRdownload.sh 
+```
+
+  * making new databases
+  
+```
+###Sprot
+[dbarshis@coreV3-23-035 databases]$ pwd
+/cm/shared/apps/blast/databases
+[dbarshis@coreV3-23-035 databases]$ enable_lmod
+
+The following have been reloaded with a version change:
+  1) slurm/20.02.2 => slurm/20.02
+[dbarshis@coreV3-23-035 databases]$ module load blast
+
+[dbarshis@coreV3-23-035 databases]$ makeblastdb -in uniprot_sprot_Mar2021.fasta -dbtype prot -title uniprot_sprot_Mar2021 -out uniprot_sprot_Mar2021
+
+
+Building a new DB, current time: 03/16/2021 00:12:43
+New DB name:   /cm/shared/apps/blast/databases/uniprot_sprot_Mar2021
+New DB title:  uniprot_sprot_Mar2021
+Sequence type: Protein
+Keep MBits: T
+Maximum file size: 1000000000B
+Adding sequences from FASTA; added 564277 sequences in 26.6943 seconds.
 ```
