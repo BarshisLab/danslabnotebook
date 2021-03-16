@@ -1,6 +1,6 @@
 Dan's Lab Notebook
 ================
-# 2021-03-15_Siderastrea and Porites astreoides BlastAnnotation
+## 2021-03-15_Siderastrea and Porites astreoides BlastAnnotation
   * downloading new databases
 ```
 ####Sprot
