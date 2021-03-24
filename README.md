@@ -96,7 +96,7 @@ Maximum file size: 1000000000B
 Adding sequences from FASTA; added 564277 sequences in 26.6943 seconds.
 ```
 
-##2021-03-23_Continuing database building
+## 2021-03-23_Continuing database building
   * untar-ing nr
   
 ```
