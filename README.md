@@ -200,3 +200,117 @@ Submitted batch job 9288685
 Submitted batch job 9288686
 Submitted batch job 9288687
 ```
+
+## 2021-03-30 Submitting nr and TrEMBL blasts for Past
+
+```
+[dbarshis@turing1 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation
+[dbarshis@turing1 TotalAnnotation]$ for i in ./submissionscripts/qsubsbatch_1/*.sh; do sbatch $i ; done
+Submitted batch job 9295238
+Submitted batch job 9295239
+Submitted batch job 9295240
+Submitted batch job 9295241
+Submitted batch job 9295242
+Submitted batch job 9295243
+Submitted batch job 9295244
+Submitted batch job 9295245
+Submitted batch job 9295246
+Submitted batch job 9295247
+Submitted batch job 9295248
+Submitted batch job 9295249
+Submitted batch job 9295250
+Submitted batch job 9295251
+Submitted batch job 9295252
+Submitted batch job 9295253
+Submitted batch job 9295254
+Submitted batch job 9295255
+Submitted batch job 9295256
+Submitted batch job 9295257
+[dbarshis@turing1 TotalAnnotation]$ for i in ./submissionscripts/qsubsbatch_2/*.sh; do sbatch $i ; done
+Submitted batch job 9295258
+Submitted batch job 9295259
+Submitted batch job 9295260
+Submitted batch job 9295261
+Submitted batch job 9295262
+Submitted batch job 9295263
+Submitted batch job 9295264
+Submitted batch job 9295265
+Submitted batch job 9295266
+Submitted batch job 9295267
+Submitted batch job 9295268
+Submitted batch job 9295269
+Submitted batch job 9295270
+Submitted batch job 9295271
+Submitted batch job 9295272
+Submitted batch job 9295273
+Submitted batch job 9295274
+Submitted batch job 9295275
+Submitted batch job 9295276
+Submitted batch job 9295277
+[dbarshis@turing1 TotalAnnotation]$ for i in ./submissionscripts/qsubsbatch_3/*.sh; do sbatch $i ; done
+Submitted batch job 9295278
+Submitted batch job 9295279
+Submitted batch job 9295280
+Submitted batch job 9295281
+Submitted batch job 9295282
+Submitted batch job 9295283
+Submitted batch job 9295284
+Submitted batch job 9295285
+Submitted batch job 9295286
+[dbarshis@turing1 TotalAnnotation]$ for i in ./submissionscripts/qsubsbatch_6/*.sh; do sbatch $i ; done
+Submitted batch job 9295287
+Submitted batch job 9295288
+Submitted batch job 9295289
+Submitted batch job 9295290
+Submitted batch job 9295291
+Submitted batch job 9295292
+Submitted batch job 9295293
+Submitted batch job 9295294
+Submitted batch job 9295295
+Submitted batch job 9295296
+Submitted batch job 9295297
+Submitted batch job 9295298
+Submitted batch job 9295299
+Submitted batch job 9295300
+Submitted batch job 9295301
+Submitted batch job 9295302
+Submitted batch job 9295303
+Submitted batch job 9295304
+Submitted batch job 9295305
+Submitted batch job 9295306
+Submitted batch job 9295307
+Submitted batch job 9295308
+[dbarshis@turing1 TotalAnnotation]$ for i in ./submissionscripts/qsubsbatch_7/*.sh; do sbatch $i ; done
+Submitted batch job 9295309
+Submitted batch job 9295310
+Submitted batch job 9295311
+Submitted batch job 9295312
+Submitted batch job 9295313
+Submitted batch job 9295314
+Submitted batch job 9295315
+Submitted batch job 9295316
+Submitted batch job 9295317
+Submitted batch job 9295318
+Submitted batch job 9295319
+Submitted batch job 9295320
+Submitted batch job 9295321
+Submitted batch job 9295322
+Submitted batch job 9295323
+Submitted batch job 9295324
+Submitted batch job 9295325
+Submitted batch job 9295326
+Submitted batch job 9295327
+Submitted batch job 9295328
+[dbarshis@turing1 TotalAnnotation]$ ls ./submissionscripts/
+qsubsbatch_1  qsubsbatch_3  qsubsbatch_5  qsubsbatch_7
+qsubsbatch_2  qsubsbatch_4  qsubsbatch_6  qsubsbatch_8
+[dbarshis@turing1 TotalAnnotation]$ for i in ./submissionscripts/qsubsbatch_8/*.sh; do sbatch $i ; done
+Submitted batch job 9295329
+Submitted batch job 9295330
+Submitted batch job 9295331
+Submitted batch job 9295332
+Submitted batch job 9295333
+Submitted batch job 9295334
+Submitted batch job 9295335
+```
