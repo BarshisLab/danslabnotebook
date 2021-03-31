@@ -314,3 +314,116 @@ Submitted batch job 9295333
 Submitted batch job 9295334
 Submitted batch job 9295335
 ```
+
+## 2021-03-31 Re-do NRonly
+
+```
+[dbarshis@turing1 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation
+[dbarshis@turing1 TotalAnnotation]$ mv dbparams_djbnronly.txt ./nronly/
+[dbarshis@turing1 TotalAnnotation]$ cp hybridreference.fasta ./nronly/
+[dbarshis@turing1 nronly]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation/nronly
+[dbarshis@turing1 nronly]$ ~/scripts/splitfasta_cluster_batchblast2dbs_blastx_SLURM.py hybridreference.fasta 1500 dbparams_djbnronly.txt 
+[dbarshis@turing1 nronly]$ bash
+[dbarshis@turing1 nronly]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation/nronly
+[dbarshis@turing1 nronly]$ for i in submissionscripts/qsubsbatch_*/*.sh ; do sbatch $i ; done
+Submitted batch job 9295885
+Submitted batch job 9295886
+Submitted batch job 9295887
+Submitted batch job 9295888
+Submitted batch job 9295889
+Submitted batch job 9295890
+Submitted batch job 9295891
+Submitted batch job 9295892
+Submitted batch job 9295893
+Submitted batch job 9295894
+Submitted batch job 9295895
+Submitted batch job 9295896
+Submitted batch job 9295897
+Submitted batch job 9295898
+Submitted batch job 9295899
+Submitted batch job 9295900
+Submitted batch job 9295901
+Submitted batch job 9295902
+Submitted batch job 9295903
+Submitted batch job 9295904
+Submitted batch job 9295905
+Submitted batch job 9295906
+Submitted batch job 9295907
+Submitted batch job 9295908
+Submitted batch job 9295909
+Submitted batch job 9295910
+Submitted batch job 9295911
+Submitted batch job 9295912
+Submitted batch job 9295913
+Submitted batch job 9295914
+Submitted batch job 9295915
+Submitted batch job 9295916
+Submitted batch job 9295917
+Submitted batch job 9295918
+Submitted batch job 9295919
+Submitted batch job 9295920
+Submitted batch job 9295921
+Submitted batch job 9295922
+Submitted batch job 9295923
+Submitted batch job 9295924
+Submitted batch job 9295925
+Submitted batch job 9295926
+Submitted batch job 9295927
+Submitted batch job 9295928
+Submitted batch job 9295929
+Submitted batch job 9295930
+Submitted batch job 9295931
+Submitted batch job 9295932
+Submitted batch job 9295933
+```
+
+  * error, looks like error with nr database
+
+```
+[dbarshis@turing1 nronly]$ tail blastx2nr.txt 
+BLAST Database error: Input db vol size does not match lmdb vol size
+```
+
+  * re-downloading nr with update_blastdb.pl
+  
+```
+[dbarshis@coreV2-25-002 databases]$ pwd
+/cm/shared/apps/blast/databases
+[dbarshis@coreV2-25-002 databases]$ cat djbNRdownloadv2.sh 
+#!/bin/bash -l
+
+#SBATCH -o NRDownload.txt
+#SBATCH -n 2
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=NRDownload
+
+enable_lmod
+module load blast
+update_blastdb.pl --decompress nr
+[dbarshis@coreV2-25-002 databases]$ sbatch djbNRdownloadv2.sh 
+Submitted batch job 9295943
+```
+
+  * failed again
+  
+```
+[dbarshis@coreV2-25-002 databases]$ tail NRDownload.txt
+Unknown option: num_cores
+Failed to parse command line options
+
+The following have been reloaded with a version change:
+  1) sge/2011.11p1 => sge/2011
+
+Connected to NCBI
+Downloading nr (44 volumes) ...
+Downloading nr.00.tar.gz... [OK]
+Downloading nr.01.tar.gz...Failed to download nr.01.tar.gz.md5!
+[dbarshis@coreV2-25-002 databases]$ sbatch djbNR
+djbNRdownload.sh*   djbNRdownloadv2.sh* 
+[dbarshis@coreV2-25-002 databases]$ sbatch djbNRdownloadv2.sh 
+Submitted batch job 9295944
+```
