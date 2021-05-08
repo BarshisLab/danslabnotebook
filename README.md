@@ -1349,12 +1349,10 @@ done
 Submitted batch job 9307248
 ```
 
-## 2021-05-08_Starting as individual populations with --no-unal and --fast-local to see if that helps up the read mapping percentage
+## 2021-05-08_Starting as individual populations with --no-unal and --fast-local to see if that helps up the read mapping percentage and -p 5 for multi-threading to increase processing speed
 
 ```
-[dbarshis@turing1 fastqs]$ pwd
-/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs
-[dbarshis@turing1 fastqs]$ cat ESbowtiealn.sh KSbowtiealn.sh SEbowtie2aln.sh SPbowtie2aln.sh 
+[dbarshis@turing1 fastqs]$ cat ESbowtiealn.sh KSbowtiealn.sh SPbowtie2aln.sh SEbowtie2aln.sh 
 #!/bin/bash -l
 
 #SBATCH -o ESbowtie2.txt
@@ -1368,7 +1366,7 @@ module load bowtie2
 module load python
 module load samtools
 
-for i in ES[4-7]*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -S ${i%_R1.fastq}.sam; done
+for i in ES[4-7]*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -p 5 -S ${i%_R1.fastq}.sam; done
 for i in ES*.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
 
 for i in ES*UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
@@ -1387,29 +1385,10 @@ module load bowtie2
 module load python
 module load samtools
 
-for i in KS*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -S ${i%_R1.fastq}.sam; done
+for i in KS*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -p 5 -S ${i%_R1.fastq}.sam; done
 for i in KS*.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
 
 for i in KS*UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
-samtools index ${i%_UNSORTED.bam}.bam
-done
-#!/bin/bash -l
-
-#SBATCH -o SEbowtie2.txt
-#SBATCH -n 5
-#SBATCH --mail-user=dbarshis@odu.edu
-#SBATCH --mail-type=END
-#SBATCH --job-name=SEbowtie2_djb
-
-enable_lmod
-module load bowtie2
-module load python
-module load samtools
-
-for i in S*E*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -S ${i%_R1.fastq}.sam; done
-for i in S*E*.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
-
-for i in S*E*UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
 samtools index ${i%_UNSORTED.bam}.bam
 done
 #!/bin/bash -l
@@ -1425,18 +1404,37 @@ module load bowtie2
 module load python
 module load samtools
 
-for i in S*P*_*R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -S ${i%_R1.fastq}.sam; done
+for i in S*P*_*R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -p 5 -S ${i%_R1.fastq}.sam; done
 for i in S*P*.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
 
 for i in S*P*UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
 samtools index ${i%_UNSORTED.bam}.bam
 done
+#!/bin/bash -l
+
+#SBATCH -o SEbowtie2.txt
+#SBATCH -n 5
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=SEbowtie2_djb
+
+enable_lmod
+module load bowtie2
+module load python
+module load samtools
+
+for i in S*E*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -p 5 -S ${i%_R1.fastq}.sam; done
+for i in S*E*.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
+
+for i in S*E*UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
+samtools index ${i%_UNSORTED.bam}.bam
+done
 [dbarshis@turing1 fastqs]$ sbatch ESbowtiealn.sh 
-Submitted batch job 9307308
+Submitted batch job 9307312
 [dbarshis@turing1 fastqs]$ sbatch KSbowtiealn.sh 
-Submitted batch job 9307309
+Submitted batch job 9307313
 [dbarshis@turing1 fastqs]$ sbatch SPbowtie2aln.sh 
-Submitted batch job 9307310
+Submitted batch job 9307314
 [dbarshis@turing1 fastqs]$ sbatch SEbowtie2aln.sh 
-Submitted batch job 9307311
+Submitted batch job 9307315
 ```
