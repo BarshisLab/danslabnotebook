@@ -1075,5 +1075,276 @@ gunzip -c M_18_3783_S7-P-ST-33B_D708-D505_L005_R1_001_val_1.fq.gz > S7-P-ST-33B_
 gunzip -c M_18_3783_S7-P-ST-33B_D708-D505_L005_R2_001_val_2.fq.gz > S7-P-ST-33B_R2.fastq
 gunzip -c M_18_3788_S7-P-ST-36B_D703-D506_L005_R1_001_val_1.fq.gz > S7-P-ST-36B_R1.fastq
 gunzip -c M_18_3788_S7-P-ST-36B_D703-D506_L005_R2_001_val_2.fq.gz > S7-P-ST-36B_R2.fastq
+[dbarshis@coreV2-25-knc-001 fastqs]$ sbatch gunziprenamefastqs.sh 
+Submitted batch job 9307014
+```
+## 2021-05-07_SNPing-part-2
+  * fixing naming scheme
 
+```
+[dbarshis@turing1 fastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs
+[dbarshis@turing1 fastqs]$ cat gunz
+gunzipandrename2.sh*   gunzipfastqs.txt*      gunziprenamefastqs.sh* 
+[dbarshis@turing1 fastqs]$ cat gunzipandrename2.sh 
+#!/bin/bash -l
+
+#SBATCH -o gunzipfastqs2.txt
+#SBATCH -n 2
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=gunzipfastqs_djb
+
+gunzip -c M_18_3818_ES5-36A_D710-D507_L008_R1_001_val_1.fq.gz > ES5-30A_R1.fastq
+gunzip -c M_18_3818_ES5-36A_D710-D507_L008_R2_001_val_2.fq.gz > ES5-30A_R2.fastq
+gunzip -c M_18_3798_ES2-36A_D707-D507_L006_R1_001_val_1.fq.gz > ES1-36A_R1.fastq
+gunzip -c M_18_3798_ES2-36A_D707-D507_L006_R2_001_val_2.fq.gz > ES1-36A_R2.fastq
+gunzip -c M_18_3816_ES3-36A_D708-D507_L008_R1_001_val_1.fq.gz > ES2-36A_R1.fastq
+gunzip -c M_18_3816_ES3-36A_D708-D507_L008_R2_001_val_2.fq.gz > ES2-36A_R2.fastq
+gunzip -c M_18_3817_ES4-36A_D709-D507_L008_R1_001_val_1.fq.gz > ES3-36A_R1.fastq
+gunzip -c M_18_3817_ES4-36A_D709-D507_L008_R2_001_val_2.fq.gz > ES3-36A_R2.fastq
+gunzip -c M_18_3811_ES5-30A_D708-D506_L008_R1_001_val_1.fq.gz > ES4-36A_R1.fastq
+gunzip -c M_18_3811_ES5-30A_D708-D506_L008_R2_001_val_2.fq.gz > ES4-36A_R2.fastq
+gunzip -c M_18_3819_ES6-36A_D711-D507_L008_R1_001_val_1.fq.gz > ES5-36A_R1.fastq
+gunzip -c M_18_3819_ES6-36A_D711-D507_L008_R2_001_val_2.fq.gz > ES5-36A_R2.fastq
+gunzip -c M_18_3820_ES7-36A_D712-D507_L008_R1_001_val_1.fq.gz > ES6-36A_R1.fastq
+gunzip -c M_18_3820_ES7-36A_D712-D507_L008_R2_001_val_2.fq.gz > ES6-36A_R2.fastq
+gunzip -c M_18_3815_ES1-36A_D706-D507_L008_R1_001_val_1.fq.gz > ES7-36A_R1.fastq
+gunzip -c M_18_3815_ES1-36A_D706-D507_L008_R2_001_val_2.fq.gz > ES7-36A_R2.fastq
+
+[dbarshis@turing1 fastqs]$ sbatch gunzipandrename2.sh 
+Submitted batch job 9307079
+```
+  * Starting mapping
+
+```
+[dbarshis@turing1 fastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs
+[dbarshis@turing1 fastqs]$ cat Spis.genome.genes.nt.longest.fa smic.genome.genes.nt.longest.fa > SpismicHybridref.fasta
+[dbarshis@coreV1-22-005 fastqs]$ enable_lmod
+
+The following have been reloaded with a version change:
+  1) slurm/20.11.5 => slurm/20.11
+
+[dbarshis@coreV1-22-005 fastqs]$ module load bowtie2
+[dbarshis@coreV1-22-005 fastqs]$ bowtie2-build SpismicHybridref.fasta SpismicHybridref
+/usr/bin/env: python3: No such file or directory
+[dbarshis@coreV1-22-005 fastqs]$ module load python
+
+The following have been reloaded with a version change:
+  1) sge/2011.11p1 => sge/2011
+[dbarshis@coreV1-22-005 fastqs]$ bowtie2-build SpismicHybridref.fasta SpismicHybridref
+Settings:
+  Output files: "SpismicHybridref.*.bt2"
+  Line rate: 6 (line is 64 bytes)
+  Lines per side: 1 (side is 64 bytes)
+  Offset rate: 4 (one in 16)
+  FTable chars: 10
+  Strings: unpacked
+  Max bucket size: default
+  Max bucket size, sqrt multiplier: default
+  Max bucket size, len divisor: 4
+  Difference-cover sample period: 1024
+  Endianness: little
+  Actual local endianness: little
+  Sanity checking: disabled
+  Assertions: disabled
+  Random seed: 0
+  Sizeofs: void*:8, int:4, long:8, size_t:8
+Input files DNA, FASTA:
+  SpismicHybridref.fasta
+Building a SMALL index
+Reading reference sizes
+  Time reading reference sizes: 00:00:02
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:05
+bmax according to bmaxDivN setting: 40630681
+Using parameters --bmax 30473011 --dcv 1024
+  Doing ahead-of-time memory usage test
+  Passed!  Constructing with these parameters: --bmax 30473011 --dcv 1024
+Constructing suffix-array element generator
+Building DifferenceCoverSample
+  Building sPrime
+  Building sPrimeOrder
+  V-Sorting samples
+  V-Sorting samples time: 00:00:04
+  Allocating rank array
+  Ranking v-sort output
+  Ranking v-sort output time: 00:00:01
+  Invoking Larsson-Sadakane on ranks
+  Invoking Larsson-Sadakane on ranks time: 00:00:02
+  Sanity-checking and returning
+Building samples
+Reserving space for 12 sample suffixes
+Generating random suffixes
+QSorting 12 sample offsets, eliminating duplicates
+QSorting sample offsets, eliminating duplicates time: 00:00:00
+Multikey QSorting 12 samples
+  (Using difference cover)
+  Multikey QSorting samples time: 00:00:00
+Calculating bucket sizes
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Avg bucket size: 1.62523e+08 (target: 30473010)
+Converting suffix-array elements to index image
+Allocating ftab, absorbFtab
+Entering Ebwt loop
+Getting block 1 of 1
+  No samples; assembling all-inclusive block
+  Sorting block of length 162522724 for bucket 1
+  (Using difference cover)
+  Sorting block time: 00:01:48
+Returning block of 162522725 for bucket 1
+Exited Ebwt loop
+fchr[A]: 0
+fchr[C]: 39498523
+fchr[G]: 80669787
+fchr[T]: 126813172
+fchr[$]: 162522724
+Exiting Ebwt::buildToDisk()
+Returning from initFromVector
+Wrote 61386591 bytes to primary EBWT file: SpismicHybridref.1.bt2
+Wrote 40630688 bytes to secondary EBWT file: SpismicHybridref.2.bt2
+Re-opening _in1 and _in2 as input streams
+Returning from Ebwt constructor
+Headers:
+    len: 162522724
+    bwtLen: 162522725
+    sz: 40630681
+    bwtSz: 40630682
+    lineRate: 6
+    offRate: 4
+    offMask: 0xfffffff0
+    ftabChars: 10
+    eftabLen: 20
+    eftabSz: 80
+    ftabLen: 1048577
+    ftabSz: 4194308
+    offsLen: 10157671
+    offsSz: 40630684
+    lineSz: 64
+    sideSz: 64
+    sideBwtSz: 48
+    sideBwtLen: 192
+    numSides: 846473
+    numLines: 846473
+    ebwtTotLen: 54174272
+    ebwtTotSz: 54174272
+    color: 0
+    reverse: 0
+Total time for call to driver() for forward index: 00:02:47
+Reading reference sizes
+  Time reading reference sizes: 00:00:01
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:05
+  Time to reverse reference sequence: 00:00:00
+bmax according to bmaxDivN setting: 40630681
+Using parameters --bmax 30473011 --dcv 1024
+  Doing ahead-of-time memory usage test
+  Passed!  Constructing with these parameters: --bmax 30473011 --dcv 1024
+Constructing suffix-array element generator
+Building DifferenceCoverSample
+  Building sPrime
+  Building sPrimeOrder
+  V-Sorting samples
+  V-Sorting samples time: 00:00:04
+  Allocating rank array
+  Ranking v-sort output
+  Ranking v-sort output time: 00:00:01
+  Invoking Larsson-Sadakane on ranks
+  Invoking Larsson-Sadakane on ranks time: 00:00:02
+  Sanity-checking and returning
+Building samples
+Reserving space for 12 sample suffixes
+Generating random suffixes
+QSorting 12 sample offsets, eliminating duplicates
+QSorting sample offsets, eliminating duplicates time: 00:00:00
+Multikey QSorting 12 samples
+  (Using difference cover)
+  Multikey QSorting samples time: 00:00:00
+Calculating bucket sizes
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Avg bucket size: 1.62523e+08 (target: 30473010)
+Converting suffix-array elements to index image
+Allocating ftab, absorbFtab
+Entering Ebwt loop
+Getting block 1 of 1
+  No samples; assembling all-inclusive block
+  Sorting block of length 162522724 for bucket 1
+  (Using difference cover)
+  Sorting block time: 00:01:32
+Returning block of 162522725 for bucket 1
+Exited Ebwt loop
+fchr[A]: 0
+fchr[C]: 39498523
+fchr[G]: 80669787
+fchr[T]: 126813172
+fchr[$]: 162522724
+Exiting Ebwt::buildToDisk()
+Returning from initFromVector
+Wrote 61386591 bytes to primary EBWT file: SpismicHybridref.rev.1.bt2
+Wrote 40630688 bytes to secondary EBWT file: SpismicHybridref.rev.2.bt2
+Re-opening _in1 and _in2 as input streams
+Returning from Ebwt constructor
+Headers:
+    len: 162522724
+    bwtLen: 162522725
+    sz: 40630681
+    bwtSz: 40630682
+    lineRate: 6
+    offRate: 4
+    offMask: 0xfffffff0
+    ftabChars: 10
+    eftabLen: 20
+    eftabSz: 80
+    ftabLen: 1048577
+    ftabSz: 4194308
+    offsLen: 10157671
+    offsSz: 40630684
+    lineSz: 64
+    sideSz: 64
+    sideBwtSz: 48
+    sideBwtLen: 192
+    numSides: 846473
+    numLines: 846473
+    ebwtTotLen: 54174272
+    ebwtTotSz: 54174272
+    color: 0
+    reverse: 1
+Total time for backward call to driver() for mirror index: 00:02:24
+```
+  * full bowtie2 alignment and sorting and indexing
+
+```
+[dbarshis@coreV1-22-013 fastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs
+[dbarshis@coreV1-22-013 fastqs]$ cat bowtiealn.sh 
+#!/bin/bash -l
+
+#SBATCH -o bowtie2.txt
+#SBATCH -n 5
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=bowtie2_djb
+
+enable_lmod
+module load bowtie2
+module load python
+module load samtools
+
+for i in *_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 > ${i%_R1.fastq}.sam; done
+for i in *.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
+
+for i in *UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
+samtools index ${i%_UNSORTED.bam}.bam
+done
+[dbarshis@coreV1-22-013 fastqs]$ sbatch bowtiealn.sh 
+Submitted batch job 9307248
 ```
