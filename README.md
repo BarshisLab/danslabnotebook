@@ -1438,3 +1438,32 @@ Submitted batch job 9307314
 [dbarshis@turing1 fastqs]$ sbatch SEbowtie2aln.sh 
 Submitted batch job 9307315
 ```
+
+## 2021-05-09_Forgot to do ES1-3
+
+```
+[dbarshis@turing1 fastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs
+[dbarshis@turing1 fastqs]$ cat ESbowtiealnv2.sh 
+#!/bin/bash -l
+
+#SBATCH -o ESbowtie2.txt
+#SBATCH -n 5
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=ESbowtie2_djb
+
+enable_lmod
+module load bowtie2
+module load python
+module load samtools
+
+for i in ES[1-3]*_R1.fastq; do bowtie2 --rg-id ${i%_R1.fastq} --rg SM:${i%_R1.fastq} --no-unal --fast-local -x SpismicHybridref -1 $i -2 ${i%_R1.fastq}_R2.fastq -k 5 -p 5 -S ${i%_R1.fastq}.sam; done
+for i in ES[1-3]*.sam; do `samtools view -bS $i > ${i%.sam}_UNSORTED.bam`; done
+
+for i in ES[1-3]*UNSORTED.bam; do samtools sort $i > ${i%_UNSORTED.bam}.bam
+samtools index ${i%_UNSORTED.bam}.bam
+done
+[dbarshis@turing1 fastqs]$ sbatch ESbowtiealnv2.sh 
+Submitted batch job 9307357
+```
