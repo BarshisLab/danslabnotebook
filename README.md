@@ -1467,3 +1467,52 @@ done
 [dbarshis@turing1 fastqs]$ sbatch ESbowtiealnv2.sh 
 Submitted batch job 9307357
 ```
+
+## 2021-05-10_Freebayesing
+
+```
+[dbarshis@turing1 fastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs
+[dbarshis@turing1 fastqs]$ cat ESbowtie2.txt KSbowtie2.txt SEbowtie2.txt SPbowtie2.txt > AllBowtie2AlnStats.txt
+[dbarshis@turing1 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/BAMs
+[dbarshis@turing1 BAMs]$ cat freebayes.sh 
+#!/bin/bash -l
+
+#SBATCH -o Freebayes.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Freebayes_djb
+
+enable_lmod
+module load dDocent
+
+freebayes --genotype-qualities -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs/SpismicHybridref.fasta *.bam > CBASS84merged_djbfreebayes.vcf
+
+[dbarshis@turing1 BAMs]$ sbatch freebayes.sh 
+Submitted batch job 9307580
+```
+
+  * Checking if specifying 8 cpus will speed things up
+
+```
+[dbarshis@turing1 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/BAMs
+[dbarshis@turing1 BAMs]$ cat freebayes_c8.sh 
+#!/bin/bash -l
+
+#SBATCH -o Freebayes_c8.txt
+#SBATCH -c 8
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Freebayes_djb
+
+enable_lmod
+module load dDocent
+
+freebayes --genotype-qualities -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs/SpismicHybridref.fasta *.bam > CBASS84merged_djbfreebayes_c8.vcf
+
+[dbarshis@turing1 BAMs]$ sbatch freebayes_c8.sh 
+Submitted batch job 9307717
+```
