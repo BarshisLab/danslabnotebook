@@ -1516,3 +1516,26 @@ freebayes --genotype-qualities -f /cm/shared/courses/dbarshis/barshislab/danb/ta
 [dbarshis@turing1 BAMs]$ sbatch freebayes_c8.sh 
 Submitted batch job 9307717
 ```
+
+  * Trying freebayes-parallel
+  
+```
+[dbarshis@coreV3-23-041 BAMs]$ pwd 
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/BAMs
+[dbarshis@coreV3-23-041 BAMs]$ cat freebayes_parallel.sh 
+#!/bin/bash -l
+
+#SBATCH -o Frebayparallel.txt
+#SBATCH -c 32
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Frebaypar_djb
+
+enable_lmod
+module load container_env ddocent
+
+crun freebayes-parallel <(crun fasta_generate_regions.py /cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs/SpismicHybridref.fasta.fai 100000) 36 -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/DansSNPing/fastqs/SpismicHybridref.fasta *.bam >CBASS84_freebayes-parallel.vcf
+
+[dbarshis@coreV3-23-041 BAMs]$ sbatch freebayes_parallel.sh 
+Submitted batch job 9308067
+```
