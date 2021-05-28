@@ -1613,3 +1613,153 @@ Indivs with genotypes in vcf file: ES7-36A	KS1-30A	KS2-30A	KS3-30A	KS5-30A	KS1-3
 
   * then transferring to laptop and running adegenet
   * An issue with .'s in the seq names, trying with all .'s converted to -'s
+
+## 2021-05-17 Removing bad samples and trying one sample per genet
+
+```
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Stylophora_pistillata/SerdarSNPs
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ cat lowDPindv.txt 
+S6-P-ST-36B
+KS2-33A
+ES3-33A
+ES1-36A
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ vcftools --vcf 559423_CoralSNPPooled_HEAFilters_Spisonly.vcf --remove lowDPindv.txt --recode --recode-INFO-all --out 559423_CoralSNPPooled_HEAFilters_Spisonly_79samples
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 559423_CoralSNPPooled_HEAFilters_Spisonly.vcf
+	--remove lowDPindv.txt
+	--recode-INFO-all
+	--out 559423_CoralSNPPooled_HEAFilters_Spisonly_79samples
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Excluding individuals in 'exclude' list
+After filtering, kept 79 out of 83 Individuals
+Outputting VCF file...
+After filtering, kept 559423 out of a possible 559423 Sites
+Run Time = 71.00 seconds
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ vcftools --vcf 559423_CoralSNPPooled_HEAFilters_Spisonly_79samples.recode.vcf --max-missing 0.95 --recode --recode-INFO-all --out 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_79samples
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 559423_CoralSNPPooled_HEAFilters_Spisonly_79samples.recode.vcf
+	--recode-INFO-all
+	--max-missing 0.95
+	--out 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_79samples
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 79 out of 79 Individuals
+Outputting VCF file...
+After filtering, kept 36498 out of a possible 559423 Sites
+Run Time = 20.00 seconds
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ cat Onegenetpersample.txt 
+KS1-30A
+KS2-30A
+KS3-30A
+KS4-30A
+KS5-30A
+KS6-30A
+KS7-30A
+S1-E-ST-30B
+S2-E-ST-30B
+S3-E-ST-30B
+S4-E-ST-30B
+S5-E-ST-30B
+S6-E-ST-30B
+S7-E-ST-30B
+S1-P-ST-30B
+S2-P-ST-30B
+S3-P-ST-30B
+S4-P-ST-30B
+S5-P-ST-30B
+S6-P-ST-30B
+S7-P-ST-30B
+ES1-30A
+ES2-30A
+ES3-30A
+ES4-30A
+ES5-30A
+ES6-33A
+ES7-30A
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ vcftools --vcf 559423_CoralSNPPooled_HEAFilters_Spisonly.vcf --keep Onegenetpersample.txt --recode --recode-INFO-all --out 559423_CoralSNPPooled_HEAFilters_Spisonly_28samples
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 559423_CoralSNPPooled_HEAFilters_Spisonly.vcf
+	--keep Onegenetpersample.txt
+	--recode-INFO-all
+	--out 559423_CoralSNPPooled_HEAFilters_Spisonly_28samples
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Keeping individuals in 'keep' list
+After filtering, kept 28 out of 83 Individuals
+Outputting VCF file...
+After filtering, kept 559423 out of a possible 559423 Sites
+Run Time = 40.00 seconds
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ vcftools --vcf 559423_CoralSNPPooled_HEAFilters_Spisonly_28samples.recode.vcf --max-missing 0.95 --recode --recode-INFO-all --out 250698_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_28samples
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 559423_CoralSNPPooled_HEAFilters_Spisonly_28samples.recode.vcf
+	--recode-INFO-all
+	--max-missing 0.95
+	--out 250698_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_28samples
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 28 out of 28 Individuals
+Outputting VCF file...
+After filtering, kept 250698 out of a possible 559423 Sites
+Run Time = 19.00 seconds
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ vcftools --vcf 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_79samples.recode.vcf --keep Onegenetpersample.txt --recode --recode-INFO-all --out 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_28samples
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_79samples.recode.vcf
+	--keep Onegenetpersample.txt
+	--recode-INFO-all
+	--out 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_28samples
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Keeping individuals in 'keep' list
+After filtering, kept 28 out of 79 Individuals
+Outputting VCF file...
+After filtering, kept 36498 out of a possible 36498 Sites
+Run Time = 4.00 seconds
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ /cm/shared/courses/dbarshis/21AdvGenomics/scripts/vcftogenepop_advbioinf.py 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_79samples.recode.vcf popfile.txt 
+Indivs with genotypes in vcf file: ES7-36A	KS1-30A	KS2-30A	KS3-30A	KS5-30A	KS1-33A	KS3-33A	KS4-33A	KS5-33A	KS6-33A	KS7-33A	KS1-36A	KS2-36A	KS4-36A	KS5-36A	KS6-36A	S1-E-ST-30B	S2-E-ST-30B	S3-E-ST-30B	S4-E-ST-30B	S5-E-ST-30B	S6-E-ST-30BS7-E-ST-30B	S1-E-ST-33B	S2-E-ST-33B	S3-E-ST-33B	S4-E-ST-33B	S5-E-ST-33B	S6-E-ST-33B	S7-E-ST-33B	S1-E-ST-36B	S2-E-ST-36B	S3-E-ST-36B	S4-E-ST-36B	S5-E-ST-36B	S6-E-ST-36B	S7-E-ST-36B	S1-P-ST-30B	S2-P-ST-30BS3-P-ST-30B	S4-P-ST-30B	S6-P-ST-30B	S7-P-ST-30B	S1-P-ST-33B	S2-P-ST-33B	S3-P-ST-33B	S4-P-ST-33B	S5-P-ST-33B	S6-P-ST-33B	S7-P-ST-33B	S1-P-ST-36B	S2-P-ST-36B	S3-P-ST-36B	S5-P-ST-36B	S7-P-ST-36B	ES1-30A	ES2-30A	ES4-30A	ES1-33A	ES4-33A	ES5-33A	ES6-33A	ES7-33A	KS4-30A	KS6-30A	KS7-30A	KS3-36A	KS7-36A	S5-P-ST-30B	S4-P-ST-36B	ES3-30A	ES7-30A	ES2-33A	ES5-36A	ES3-36A	ES4-36A	ES5-30A	ES2-36A	ES6-36A
+83 36498 36498 36498 36498 79
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ /cm/shared/courses/dbarshis/21AdvGenomics/scripts/vcftogenepop_advbioinf.py 36498_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_28samples.recode.vcf popfile.txt
+Indivs with genotypes in vcf file: KS1-30A	KS2-30A	KS3-30A	KS5-30A	S1-E-ST-30B	S2-E-ST-30B	S3-E-ST-30B	S4-E-ST-30BS5-E-ST-30B	S6-E-ST-30B	S7-E-ST-30B	S1-P-ST-30B	S2-P-ST-30B	S3-P-ST-30B	S4-P-ST-30B	S6-P-ST-30B	S7-P-ST-30B	ES1-30A	ES2-30A	ES4-30A	ES6-33A	KS4-30A	KS6-30A	KS7-30A	S5-P-ST-30B	ES3-30A	ES7-30A	ES5-30A
+32 36498 36498 36498 36498 28
+[dbarshis@coreV2-25-knc-001 SerdarSNPs]$ /cm/shared/courses/dbarshis/21AdvGenomics/scripts/vcftogenepop_advbioinf.py 250698_CoralSNPPooled_HEAFilters-maxmissing95_Spisonly_28samples.recode.vcf popfile.txt 
+Indivs with genotypes in vcf file: KS1-30A	KS2-30A	KS3-30A	KS5-30A	S1-E-ST-30B	S2-E-ST-30B	S3-E-ST-30B	S4-E-ST-30BS5-E-ST-30B	S6-E-ST-30B	S7-E-ST-30B	S1-P-ST-30B	S2-P-ST-30B	S3-P-ST-30B	S4-P-ST-30B	S6-P-ST-30B	S7-P-ST-30B	ES1-30A	ES2-30A	ES4-30A	ES6-33A	KS4-30A	KS6-30A	KS7-30A	S5-P-ST-30B	ES3-30A	ES7-30A	ES5-30A
+32 250698 250698 250698 250698 28
+```
+
+  * transferring to laptop
