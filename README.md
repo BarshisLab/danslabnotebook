@@ -1763,3 +1763,24 @@ Indivs with genotypes in vcf file: KS1-30A	KS2-30A	KS3-30A	KS5-30A	S1-E-ST-30B	S
 ```
 
   * transferring to laptop
+
+## 2021-07-15 Parsing Ssid NR blast output
+
+```
+[dbarshis@coreV2-25-026 nr]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation/blastoutputs/nr
+[dbarshis@coreV2-25-026 nr]$ cat BlastParse.sh 
+#!/bin/bash -l
+#SBATCH -o parse_nr_2021-07-15.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=parseNR
+
+module load biopython
+
+/cm/shared/courses/dbarshis/15AdvBioinf/scripts/parse_blastnortblastx_advbioinf.py Parsed_NR.txt tblastx *.xml
+
+[dbarshis@coreV2-25-026 nr]$ sbatch BlastParse.sh 
+Submitted batch job 9433194
+```
