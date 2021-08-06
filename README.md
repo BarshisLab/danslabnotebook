@@ -1784,3 +1784,42 @@ module load biopython
 [dbarshis@coreV2-25-026 nr]$ sbatch BlastParse.sh 
 Submitted batch job 9433194
 ```
+
+## 2021-08-06 Parsing Ssid NR blast output again and starting Past NR blast output
+
+```
+[dbarshis@turing1 nr]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation/blastoutputs/nr
+[dbarshis@turing1 nr]$ cat BlastParse_v2.sh 
+#!/bin/bash -l
+#SBATCH -o parse_nr_2021-08-06.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=parseNR
+
+module load biopython
+
+for i in *.xml; do /cm/shared/courses/dbarshis/15AdvBioinf/scripts/parse_blastnortblastx_advbioinf.py ${i%.xml}_parsed.txt tblastx $i; done
+
+[dbarshis@turing1 nr]$ sbatch BlastParse_v2.sh 
+Submitted batch job 9492106
+```
+
+```
+[dbarshis@turing1 nr]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation/nronly/blastoutputs/nr
+[dbarshis@turing1 nr]$ cat BlastParse.sh 
+#!/bin/bash -l
+#SBATCH -o parse_nr_2021-08-06.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=parseNR
+
+module load biopython
+
+for i in *.xml; do /cm/shared/courses/dbarshis/15AdvBioinf/scripts/parse_blastnortblastx_advbioinf.py ${i%.xml}_parsed.txt tblastx $i; done
+[dbarshis@turing1 nr]$ sbatch BlastParse.sh 
+Submitted batch job 9492113
+```
