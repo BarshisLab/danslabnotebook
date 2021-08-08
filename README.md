@@ -1823,3 +1823,75 @@ for i in *.xml; do /cm/shared/courses/dbarshis/15AdvBioinf/scripts/parse_blastno
 [dbarshis@turing1 nr]$ sbatch BlastParse.sh 
 Submitted batch job 9492113
 ```
+
+## 2021-08-08 Cat'ing parsed Ssid and Past blast outputs and starting total annotation
+
+```
+##Ssid
+# NR
+[dbarshis@turing1 nr]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation/blastoutputs/nr
+[dbarshis@coreV2-25-knc-001 nr]$ cat *_parsed.txt > ../../Sid_hybridref_final_blastx2nr_parsed.txt
+# Sprot
+[dbarshis@coreV2-25-knc-001 uniprot_sprot_Mar2021]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation/blastoutputs/uniprot_sprot_Mar2021
+[dbarshis@coreV2-25-knc-001 uniprot_sprot_Mar2021]$ cat *_Mar2021.txt > ../../Sid_hybridref_final_blastx2uniprot_sprot_Mar2021.txt
+#Trembl
+[dbarshis@coreV2-25-knc-001 uniprot_trembl_Mar2021]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation/blastoutputs/uniprot_trembl_Mar2021
+[dbarshis@coreV2-25-knc-001 uniprot_trembl_Mar2021]$ cat *.txt > ../../Sid_hybridref_final_blastx2uniprot_trembl_Mar2021.txt
+#make a directory called flatfiles inside where you will run total annotation, this is where the script will put all of the files that it curls from nr
+[dbarshis@coreV2-25-knc-001 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation
+[dbarshis@coreV2-25-knc-001 TotalAnnotation]$ mkdir flatfiles
+#Launch totalannotation
+[dbarshis@turing1 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation
+[dbarshis@turing1 TotalAnnotation]$ cat totalannotation.sh 
+#!/bin/bash -l
+#SBATCH -o 2021Aug09_totalannotate.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Ssidannotate
+
+/cm/shared/courses/dbarshis/15AdvBioinf/scripts/totalannotation_advbioinf.py Sid_hybridref_final.fasta Sid_hybridref_final_blastx2nr_parsed.txt stuffsfornr.txt Sid_hybridref_final_blastx2uniprot_sprot_Mar2021.txt Sid_hybridref_final_blastx2uniprot_trembl_Mar2021.txt 1e-4 flatfiles Sid_hybridref_final_totalannotated.txt
+
+[dbarshis@turing1 TotalAnnotation]$ sbatch totalannotation.sh 
+Submitted batch job 9498011
+
+##Past
+#NR
+[dbarshis@coreV2-25-026 nr]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation/nronly/blastoutputs/nr
+[dbarshis@coreV2-25-026 nr]$ cat hybrid*_parsed.txt > Past_hybridreference_blastx2nr_parsed.txt
+#sprot
+[dbarshis@coreV2-25-026 nr]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation/blastoutputs/uniprot_sprot_Mar2021/
+[dbarshis@coreV2-25-026 uniprot_sprot_Mar2021]$ cat *.txt > ../../Past_hybridreference_blastx2uniprot_sprot_Mar2021.txt
+#trembl
+[dbarshis@coreV2-25-026 uniprot_trembl_Mar2021]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation/blastoutputs/uniprot_trembl_Mar2021
+[dbarshis@coreV2-25-026 uniprot_trembl_Mar2021]$ cat *.txt > ../../Past_hybridreference_blastx2uniprot_trembl_Mar2021.txt
+#make a directory called flatfiles inside where you will run total annotation, this is where the script will put all of the files that it curls from nr
+[dbarshis@coreV2-25-026 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation
+[dbarshis@coreV2-25-026 TotalAnnotation]$ mkdir flatfiles
+
+#Launch totalannotation
+[dbarshis@coreV2-25-026 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation
+[dbarshis@coreV2-25-026 TotalAnnotation]$ cat totalannotation.sh 
+#!/bin/bash -l
+#SBATCH -o 2021Aug09_totalannotate.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Pastannotate
+
+/cm/shared/courses/dbarshis/15AdvBioinf/scripts/totalannotation_advbioinf.py hybridreference.fasta Past_hybridreference_blastx2nr_parsed.txt stuffsfornr.txt Past_hybridreference_blastx2uniprot_sprot_Mar2021.txt Past_hybridreference_blastx2uniprot_trembl_Mar2021.txt 1e-4 flatfiles Past_hybridreference_totalannotated.txt
+
+[dbarshis@coreV2-25-026 TotalAnnotation]$ sbatch totalannotation.sh 
+Submitted batch job 9498010
+```
+
