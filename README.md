@@ -1895,3 +1895,38 @@ Submitted batch job 9498011
 Submitted batch job 9498010
 ```
 
+## 2021-Aug-10 Re-starting (seems like flatfile download got stuck)
+
+```
+##Ssid
+[dbarshis@turing1 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Siderastrea_siderea/hybridref_final/TotalAnnotation
+[dbarshis@turing1 TotalAnnotation]$ cat totalannotation.sh 
+#!/bin/bash -l
+#SBATCH -o 2021Aug09_totalannotate.txt
+#SBATCH --error=2021Aug09_totalannotate_err.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Ssidannotate
+
+/cm/shared/courses/dbarshis/15AdvBioinf/scripts/totalannotation_advbioinf.py Sid_hybridref_final.fasta Sid_hybridref_final_blastx2nr_parsed.txt stuffsfornr.txt Sid_hybridref_final_blastx2uniprot_sprot_Mar2021.txt Sid_hybridref_final_blastx2uniprot_trembl_Mar2021.txt 1e-4 flatfiles Sid_hybridref_final_totalannotated.txt
+
+[dbarshis@turing1 TotalAnnotation]$ sbatch totalannotation.sh 
+Submitted batch job 9500643
+
+##Past
+[dbarshis@coreV1-22-003 TotalAnnotation]$ pwd
+/cm/shared/courses/dbarshis/barshislab/VRad/taxons/Porites_astreoides/Paytan/P_ast/refassembly/hybridref/TotalAnnotation
+[dbarshis@coreV1-22-003 TotalAnnotation]$ cat totalannotation.sh 
+#!/bin/bash -l
+#SBATCH -o 2021Aug09_totalannotate.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Pastannotate
+
+/cm/shared/courses/dbarshis/15AdvBioinf/scripts/totalannotation_advbioinf.py hybridreference.fasta Past_hybridreference_blastx2nr_parsed.txt stuffsfornr.txt Past_hybridreference_blastx2uniprot_sprot_Mar2021.txt Past_hybridreference_blastx2uniprot_trembl_Mar2021.txt 1e-4 flatfiles Past_hybridreference_totalannotated.txt
+[dbarshis@coreV1-22-003 TotalAnnotation]$ sbatch totalannotation.sh 
+Submitted batch job 9500639
+```
