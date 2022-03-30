@@ -2,7 +2,8 @@ Dan's Lab Notebook
 ================
 ## 2022-01-05_Unzipping Mote Pilot v1 125 sample data
   * unzipping raw data
-```
+
+```bash
 [dbarshis@turing1 2021-12_MotePilotV1]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_cervicornis/2021-12_MotePilotV1
 [dbarshis@turing1 2021-12_MotePilotV1]$ cat Unzip.sh 
@@ -21,7 +22,8 @@ Submitted batch job 9675766
 Slurm Job_id=9675766 Name=UnZip Ended, Run time 02:44:34, COMPLETED, ExitCode 0
 ```
   * md5 check summing to confirm integrity of the raw .zip file after download
-```
+
+```bash
 [dbarshis@coreV2-22-032 2021-12_MotePilotV1]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_cervicornis/2021-12_MotePilotV1
 [dbarshis@coreV2-22-032 2021-12_MotePilotV1]$ cat ChekSum.sh 
@@ -47,7 +49,7 @@ Looks good!
   * Wget didn't work, trying labmac browser to RC drive
   
 ## 2022-01-15_Download finished, cp'd to /cm/share, now checksumming
-```
+```bash
 [dbarshis@turing1 2021-12_MotePilotV1]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1
 [dbarshis@turing1 2021-12_MotePilotV1]$ cat ChekSum.sh 
@@ -72,7 +74,7 @@ md5.txt*                     X204SC21081158-Z01-F002.zip*
 ```
   * Unzipping raw data
   
-```
+```bash
 [dbarshis@turing1 2021-12_MotePilotV1]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1
 [dbarshis@turing1 2021-12_MotePilotV1]$ cat Unzip.sh 
@@ -94,7 +96,7 @@ Submitted batch job 9688145
 
   * generating trimGalore command
 
-```
+```bash
 [dbarshis@coreV2-22-031 test_w_fastqc]$ pwd
 /cm/shared/courses/dbarshis/barshislab/KatieP/taxons/Porites_astreoides/2021-12_MotePilotV1/raw_data_fastqs/djbtest/test_w_fastqc
 enable_lmod
@@ -105,7 +107,7 @@ crun trim_galore --fastqc --paired R1FILE.fq.gz R2FILE.fq.gz
 ```
 
 ## 2022-02-02_TrimGaloring
-```
+```bash
 dbarshis@coreV2-22-029 Acer]$ pwd
 /cm/shared/courses/dbarshis/barshislab/KatieP/taxons/Porites_astreoides/2021-12_MotePilotV1/raw_data_fastqs/Acer
 
@@ -262,7 +264,7 @@ Submitted batch job 9693803
 ```
 
 
-```
+```bash
 [dbarshis@turing1 Acer]$ pwd
 /cm/shared/courses/dbarshis/barshislab/KatieP/taxons/Porites_astreoides/2021-12_MotePilotV1/raw_data_fastqs/Acer
 [dbarshis@turing1 Acer]$ cat TarAcer.sh 
@@ -297,7 +299,7 @@ Submitted batch job 9693986
 ```
 
 ## 2022-02-07_TrimGaloring
-```
+```bash
 [dbarshis@turing1 raw_data_fastqs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/KatieP/taxons/Porites_astreoides/2021-12_MotePilotV1/raw_data_fastqs
 ### Past Off 1
@@ -415,9 +417,10 @@ for i in 20210608T1400_CBASS_US_MoteIn_Past_10_*_RNASeq_R1.fq.gz ; do `crun trim
 Submitted batch job 9694819
 Slurm Job_id=9694819 Name=TG_In_10 Ended, Run time 23:15:33, FAILED, ExitCode 127
 ```
+
   * formatting Past transcriptomes for STAR
 
-```
+```bash
 ###PutnamPast
 [dbarshis@coreV2-25-024 putnamPast]$ pwd
 /cm/shared/courses/dbarshis/barshislab/KatieP/taxons/Porites_astreoides/2021-12_MotePilotV1/raw_data_fastqs/mapping/putnamPast
@@ -465,7 +468,8 @@ Slurm Job_id=9694822 Name=Kenkgenomegenerate Ended, Run time 00:01:16, COMPLETED
 ```
 
 ## 2022-02-09_Running MultiQC and STAR
-```
+
+```bash
 [dbarshis@coreV2-25-024 Acer]$ pwd
 /cm/shared/courses/dbarshis/barshislab/KatieP/taxons/Porites_astreoides/2021-12_MotePilotV1/raw_data_fastqs/Acer
 [dbarshis@coreV2-25-024 Acer]$ module load container_env multiqc
@@ -485,9 +489,11 @@ Searching 531 files..  [####################################]  100%
 [dbarshis@coreV2-25-024 Fastqs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs
 ```
+
   * now running STAR
   * Past Inshore 10
-```
+
+```bash
 [dbarshis@turing1 QCFastqs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs/QCFastqs
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Kenkel_10.sh 
@@ -509,8 +515,10 @@ Submitted batch job 9695166
 
 Slurm Job_id=9695166 Name=STAR10Kenk Ended, Run time 08:44:30, FAILED, ExitCode 127
 ```
+
   * Star Map 10 2 Putnam
-```
+
+```bash
 [dbarshis@turing1 QCFastqs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs/QCFastqs
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Putnam_10.sh 
@@ -533,9 +541,10 @@ Submitted batch job 9695167
 
 Slurm Job_id=9695167 Name=STAR10Putnam Ended, Run time 13:34:30, FAILED, ExitCode 127
 ```
+
   * StarMap 01 to kenkel
 
-```
+```bash
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Kenkel_01.sh 
 #!/bin/bash -l
 
@@ -558,7 +567,8 @@ Slurm Job_id=9695169 Name=STAR01Kenkel Ended, Run time 08:59:39, FAILED, ExitCod
 ```
 
   * StarMap 01 to putnam
-```
+
+```bash
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Putnam_01.sh 
 #!/bin/bash -l
 
@@ -582,7 +592,7 @@ Slurm Job_id=9695168 Name=STAR01Putnam Ended, Run time 13:26:30, FAILED, ExitCod
 
   * StarMap 02 to kenkel
 
-```
+```bash
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Kenkel_02.sh 
 #!/bin/bash -l
 
@@ -605,7 +615,8 @@ Slurm Job_id=9695170 Name=STAR02Kenkel Ended, Run time 09:20:36, FAILED, ExitCod
 ```
 
   * StarMap 01 to putnam
-```
+
+```bash
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Putnam_02.sh 
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Putnam_02.sh 
 #!/bin/bash -l
@@ -629,7 +640,8 @@ Slurm Job_id=9695171 Name=STAR01Putnam Ended, Run time 06:23:55, FAILED, ExitCod
 ```
 
   * Past Inshore 10
-```
+
+```bash
 [dbarshis@turing1 QCFastqs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs/QCFastqs
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Kenkel_09.sh 
@@ -653,8 +665,10 @@ Submitted batch job 9695173
 
 Slurm Job_id=9695173 Name=STAR09Kenk Ended, Run time 08:41:24, FAILED, ExitCode 127
 ```
+
   * Star Map 09 2 Putnam
-```
+
+```bash
 [dbarshis@turing1 QCFastqs]$ cat StarMap2Putnam_09.sh
 #!/bin/bash -l
 
@@ -677,7 +691,8 @@ Slurm Job_id=9695172 Name=STAR09Putnam Ended, Run time 14:39:27, FAILED, ExitCod
 ```
 
 ## Running multiqc on trimgalore and STAR output
-```
+
+```bash
 [dbarshis@coreV2-25-024 Fastqs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs
 [dbarshis@coreV2-25-024 Fastqs]$ enable_lmod
@@ -695,3 +710,4 @@ The following have been reloaded with a version change:
 [INFO   ]         multiqc : This is MultiQC v1.9
 [INFO   ]         multiqc : Template    : default
 [INFO   ]         multiqc : Searching   : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs
+```
