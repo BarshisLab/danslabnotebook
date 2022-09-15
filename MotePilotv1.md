@@ -711,3 +711,4 @@ The following have been reloaded with a version change:
 [INFO   ]         multiqc : Template    : default
 [INFO   ]         multiqc : Searching   : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_astreoides/2021-12_MotePilotV1/Fastqs
 ```
+* test update
