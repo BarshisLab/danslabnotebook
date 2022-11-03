@@ -116,3 +116,30 @@ for i in *Mgri*_R1.fq.gz ; do `crun trim_galore --fastqc --paired $i ${i%_R1.fq.
 [dbarshis@coreV2-22-036 rawfastqs]$ sbatch TG_Mgri.sh 
 Submitted batch job 9810352
 ```
+
+##2022-11-03 Trying multi-thread TrimGalore
+
+```bash
+[dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+[dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ cat TG_Pver_multithread.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-03_TrimGalore_Pver_multithread.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=TG_Pver_multi
+
+enable_lmod
+
+module load container_env trim_galore
+
+cp /cm/shared/courses/dbarshis/barshislab/danb/taxons/2022-11_AmSam_BMKData/rawfastqs/*Pver*R[12].fq.gz ./
+
+for i in *Pver*_R1.fq.gz ; do `crun trim_galore --cores 4 --fastqc --paired $i ${i%_R1.fq.gz}_R2.fq.gz`; done
+
+[dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ sbatch TG_Pver_multithread.sh 
+Submitted batch job 9810704
+```
