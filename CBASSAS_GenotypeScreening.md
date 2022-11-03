@@ -117,7 +117,7 @@ for i in *Mgri*_R1.fq.gz ; do `crun trim_galore --fastqc --paired $i ${i%_R1.fq.
 Submitted batch job 9810352
 ```
 
-##2022-11-03 Trying multi-thread TrimGalore
+## 2022-11-03 Trying multi-thread TrimGalore
 
 ```bash
 [dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ pwd
