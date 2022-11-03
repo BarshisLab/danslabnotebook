@@ -142,4 +142,33 @@ for i in *Pver*_R1.fq.gz ; do `crun trim_galore --cores 4 --fastqc --paired $i $
 
 [dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ sbatch TG_Pver_multithread.sh 
 Submitted batch job 9810704
+
+[dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ scontrol show job 9810704
+JobId=9810704 JobName=TG_Pver_multi
+   UserId=dbarshis(414328) GroupId=users(14514) MCS_label=N/A
+   Priority=14236 Nice=0 Account=odu QOS=turing_default_qos
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:21:28 TimeLimit=UNLIMITED TimeMin=N/A
+   SubmitTime=2022-11-03T19:27:02 EligibleTime=2022-11-03T19:27:02
+   AccrueTime=2022-11-03T19:27:02
+   StartTime=2022-11-03T19:27:02 EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2022-11-03T19:27:02 Scheduler=Main
+   Partition=main AllocNode:Sid=coreV2-22-036:104477
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=coreV2-22-036
+   BatchHost=coreV2-22-036
+   NumNodes=1 NumCPUs=4 NumTasks=4 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/TG_Pver_multithread.sh
+   WorkDir=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+   StdErr=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/2022-11-03_TrimGalore_Pver_multithread.txt
+   StdIn=/dev/null
+   StdOut=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/2022-11-03_TrimGalore_Pver_multithread.txt
+   Power=
+   MailUser=dbarshis@odu.edu MailType=END
 ```
