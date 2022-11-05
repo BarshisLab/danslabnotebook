@@ -172,3 +172,202 @@ JobId=9810704 JobName=TG_Pver_multi
    Power=
    MailUser=dbarshis@odu.edu MailType=END
 ```
+
+##2022-11-04_Running MultiQC on Ahya
+
+```bash
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ enable_lmod
+
+The following have been reloaded with a version change:
+  1) slurm/20.11.5 => slurm/21.08
+
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ module load container_env multiqc
+
+The following have been reloaded with a version change:
+  1) sge/2011.11p1 => sge/2011
+
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ crun ./multiqc
+/etc/container_runtime/runtime: line 17: /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/multiqc: No such file or directory
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ crun multiqc ./
+[WARNING]         multiqc : MultiQC Version v1.13 now available!
+[INFO   ]         multiqc : This is MultiQC v1.9
+[INFO   ]         multiqc : Template    : default
+[INFO   ]         multiqc : Searching   : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData
+Searching 129 files..  [####################################]  100%          
+[INFO   ]        cutadapt : Found 32 reports
+[INFO   ]          fastqc : Found 32 reports
+[INFO   ]         multiqc : Compressing plot data
+[INFO   ]         multiqc : Report      : multiqc_report.html
+[INFO   ]         multiqc : Data        : multiqc_data
+[INFO   ]         multiqc : MultiQC complete
+```
+
+  * prepping transcript file for Ahyacinthus from [López-Nandam et al. 2021](https://www.biorxiv.org/content/10.1101/2021.07.20.453148v2), [download link](https://drive.google.com/drive/u/0/folders/15dh6eE8q850frTRVtglndXtzxSwj673g) found in Elora's [github](https://github.com/eloralopez/CoralGermline)
+
+```bash
+#### filtering for over 500bp
+(base) danbarshis@BIOLLBB0 2021_Lopez-Nandam_et_al % pwd
+/Users/danbarshis/dansstuff/Projeks/ODU/Projeks/reference_omes/Acropora_hyacinthus/2021_Lopez-Nandam_et_al
+(base) danbarshis@BIOLLBB0 2021_Lopez-Nandam_et_al % python2 ~/scripts/fasta_manips/fasta_len_filter.py 500 _over500 Ahyacinthus.transcripts.fasta
+Number of total seqs for Ahyacinthus.transcripts.fasta: 27110
+Number of seqs over 500 for Ahyacinthus.transcripts.fasta: 20854
+#### also trying over 250bp
+(base) danbarshis@BIOLLBB0 2021_Lopez-Nandam_et_al % python2 ~/scripts/fasta_manips/fasta_len_filter.py 250 _over250 Ahyacinthus.transcripts.fasta
+Number of total seqs for Ahyacinthus.transcripts.fasta: 27110
+Number of seqs over 250 for Ahyacinthus.transcripts.fasta: 25810
+```
+
+  * multiqc on Plob, Ahya, Mgris (Pver multi-thread finished)
+
+```bash
+[dbarshis@coreV2-25-044 rawfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/2022-11_AmSam_BMKData/rawfastqs
+[dbarshis@coreV2-25-044 rawfastqs]$ multiqc ./
+multiqc: Command not found.
+[dbarshis@coreV2-25-044 rawfastqs]$ crun multiqc ./
+[WARNING]         multiqc : MultiQC Version v1.13 now available!
+[INFO   ]         multiqc : This is MultiQC v1.9
+[INFO   ]         multiqc : Template    : default
+[INFO   ]         multiqc : Searching   : /cm/shared/courses/dbarshis/barshislab/danb/taxons/2022-11_AmSam_BMKData/rawfastqs
+Searching 643 files..  [####################################]  100%          
+[INFO   ]        cutadapt : Found 154 reports
+[INFO   ]          fastqc : Found 122 reports
+[INFO   ]         multiqc : Compressing plot data
+[WARNING]         multiqc : Previous MultiQC output found! Adjusting filenames..
+[WARNING]         multiqc : Use -f or --force to overwrite existing reports instead
+[INFO   ]         multiqc : Report      : multiqc_report_1.html
+[INFO   ]         multiqc : Data        : multiqc_data_1
+[INFO   ]         multiqc : MultiQC complete
+```
+
+  * multiqc on Pver multithread
+
+```bash
+
+```
+
+  * Pver transcriptome
+
+```bash
+(base) danbarshis@BIOLLBB0 ~ % cd /Users/danbarshis/dansstuff/Projeks/ODU/Projeks/reference_omes/Pocillopora_verrucosa
+(base) danbarshis@BIOLLBB0 Pocillopora_verrucosa % python2 ~/scripts/fasta_manips/avg_cov_len_fasta_DJB.py Pver_transcriptome_v1.0.fasta
+The total number of sequences is 49384
+The average sequence length is 1355
+The total number of bases is 66939700
+The minimum sequence length is 301
+The maximum sequence length is 37784
+The N50 is 2161
+Median Length = 1177
+contigs < 150bp = 0
+contigs >= 500bp = 34525
+contigs >= 1000bp = 21537
+contigs >= 2000bp = 10374
+(base) danbarshis@BIOLLBB0 Pocillopora_verrucosa % pwd
+/Users/danbarshis/dansstuff/Projeks/ODU/Projeks/reference_omes/Pocillopora_verrucosa
+(base) danbarshis@BIOLLBB0 Pocillopora_verrucosa % python2 ~/scripts/fasta_manips/fasta_len_filter.py 250 _over250 Pver_transcriptome_v1.0.fasta
+Number of total seqs for Pver_transcriptome_v1.0.fasta: 49384
+Number of seqs over 250 for Pver_transcriptome_v1.0.fasta: 49384
+(base) danbarshis@BIOLLBB0 Pocillopora_verrucosa % python2 ~/scripts/fasta_manips/fasta_len_filter.py 500 _over500 Pver_transcriptome_v1.0.fasta
+Number of total seqs for Pver_transcriptome_v1.0.fasta: 49384
+Number of seqs over 500 for Pver_transcriptome_v1.0.fasta: 34526
+```
+
+  * format references in STAR
+
+```bash
+####Pocillopora verrucosa
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/ReferenceTranscriptome
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ cat GenomeGenerate.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-04_PvergenomeGenerate.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Pvergenomegenerate
+
+enable_lmod
+
+module load container_env star
+
+STAR --runMode genomeGenerate --runThreadN 4 --genomeDir ./ --genomeFastaFiles Pver_transcriptome_v1.0_over500.fasta --genomeChrBinNbits 16
+
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ sbatch GenomeGenerate.sh 
+Submitted batch job 9810891
+####Acropora_hyacinthus_López
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ cat Ah
+Ahyacinthus_transcripts_over500_Lopez-Nandam.fasta* AhyaGenomeGenerate.sh*                              
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ cat AhyaGenomeGenerate.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-04_AhyagenomeGenerate.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Ahyagenomegenerate
+
+enable_lmod
+
+module load container_env star
+
+STAR --runMode genomeGenerate --runThreadN 4 --genomeDir ./ --genomeFastaFiles Ahyacinthus_transcripts_over500_Lopez-Nandam.fasta --genomeChrBinNbits 16
+
+[dbarshis@coreV2-25-044 ReferenceTranscriptome]$ sbatch AhyaGenomeGenerate.sh 
+Submitted batch job 9810892
+```
+
+  * Ahya alignment
+
+```bash
+[dbarshis@coreV2-25-044 qualtrimedfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/qualtrimedfastqs
+[dbarshis@coreV2-25-044 qualtrimedfastqs]$ cat AhyaStar.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-04_AhyaSTARMapping.txt
+#SBATCH -n 16
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=STARAhya
+
+enable_lmod
+
+module load container_env star
+
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2LopezAhya`; done
+
+[dbarshis@coreV2-25-044 qualtrimedfastqs]$ sbatch AhyaStar.sh 
+Submitted batch job 9810894
+```
+
+  * Pver alignment
+
+```bash
+[dbarshis@coreV2-25-044 qualtrimmedfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/qualtrimmedfastqs
+[dbarshis@coreV2-25-044 qualtrimmedfastqs]$ cat PverStar.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-04_PverSTARMapping.txt
+#SBATCH -n 16
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=STARPver
+
+enable_lmod
+
+module load container_env star
+
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/ReferenceTranscriptome/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2BuitragoPver`; done
+[dbarshis@coreV2-25-044 qualtrimmedfastqs]$ sbatch PverStar.sh 
+Submitted batch job 9810895
+```
