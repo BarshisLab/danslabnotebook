@@ -371,3 +371,108 @@ for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/bar
 [dbarshis@coreV2-25-044 qualtrimmedfastqs]$ sbatch PverStar.sh 
 Submitted batch job 9810895
 ```
+
+## 2022-11-05 MultiQC on Ahya and Pver STAR
+
+  * Ahya
+
+```bash
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ enable_lmod
+
+The following have been reloaded with a version change:
+  1) slurm/20.11.5 => slurm/21.08
+
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ module load container_env multiqc
+
+The following have been reloaded with a version change:
+  1) sge/2011.11p1 => sge/2011
+
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData
+[dbarshis@coreV2-25-041 2022-11_AmSam_BMKData]$ crun multiqc ./
+
+  /// MultiQC 🔍 | v1.13
+
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 277/277  
+|              star | Found 16 reports
+|          cutadapt | Found 32 reports
+|            fastqc | Found 32 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
+```
+
+  * Pver
+
+```bash
+[dbarshis@coreV2-25-041 2022-11_AmSamBMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+[dbarshis@coreV2-25-041 2022-11_AmSamBMKData]$ crun multiqc ./
+
+  /// MultiQC 🔍 | v1.13
+
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 481/481  
+|              star | Found 28 reports
+|          cutadapt | Found 56 reports
+|            fastqc | Found 56 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
+```
+
+## 2022-11-06 Comparing Barshis-Palubmi Ahya transcriptome
+
+  * formatting reference
+
+```bash
+[dbarshis@turing1 Barshis-Palumbi]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/Barshis-Palumbi
+[dbarshis@turing1 Barshis-Palumbi]$ cat AhyaGenomeGenerate.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-06_AhyagenomeGenerate.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Ahyagenomegenerate
+
+enable_lmod
+
+module load container_env star
+
+STAR --runMode genomeGenerate --runThreadN 4 --genomeDir ./ --genomeFastaFiles 33496_Ahyacinthus_CoralContigs_suffixed.fasta --genomeChrBinNbits 16
+
+[dbarshis@turing1 Barshis-Palumbi]$ sbatch AhyaGenomeGenerate.sh 
+Submitted batch job 9810966
+```
+
+  * mapping to PalubmiReference
+
+```bash
+[dbarshis@turing1 qualtrimedfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/qualtrimedfastqs
+[dbarshis@turing1 qualtrimedfastqs]$ cat AhyaStar2BarPal.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-06_AhyaSTARMapping2BarPal.txt
+#SBATCH -n 16
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=STARAhyaBarPal
+
+enable_lmod
+
+module load container_env star
+
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/Barshis-Palumbi/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2BarPalAhya`; done
+
+[dbarshis@turing1 qualtrimedfastqs]$ sbatch AhyaStar2BarPal.sh 
+Submitted batch job 9810967
+```
+
