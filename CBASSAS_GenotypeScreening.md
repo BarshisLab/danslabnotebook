@@ -680,6 +680,7 @@ for i in *_sorted.bam; do `crun samtools index $i`; done
 Submitted batch job 9811252
 
 #### Now vcf-ing
+#### Barshis-Palumbi
 [dbarshis@coreV2-22-036 BAMs]$ pwd
 /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Barshis-Palumbi/BAMs
 [dbarshis@coreV2-22-036 BAMs]$ cat BarPalVCFing.sh 
@@ -745,4 +746,24 @@ for i in *_sorted.bam; do `crun samtools index $i`; done
 
 [dbarshis@coreV2-22-036 BAMs]$ sbatch PverBamSortIdx.sh 
 Submitted batch job 9811251
+
+#### Lopez-Nandam
+[dbarshis@coreV2-22-036 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Lopez-Nandam/BAMs
+[dbarshis@coreV2-22-036 BAMs]$ cat LopezVCFing.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_AhyaLopezSNPing_noZ.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=NoZAhyaLopezSNP
+
+enable_lmod
+module load container_env bcftools
+
+crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/Ahyacinthus_transcripts_over500_Lopez-Nandam.fasta *_sorted.bam | crun bcftools call -Ou -mv | crun bcftools filter -s LowQual -e "QUAL<30 || DP>100" > Ahya_2Lopez_var_noZ.flt.vcf
+
+[dbarshis@coreV2-22-036 BAMs]$ sbatch LopezVCFing.sh 
+Submitted batch job 9811264
 ```
