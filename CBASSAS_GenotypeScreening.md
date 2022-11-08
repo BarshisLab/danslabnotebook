@@ -121,7 +121,7 @@ Submitted batch job 9810352
 
 ```bash
 [dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ pwd
-/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData
 [dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ cat TG_Pver_multithread.sh 
 #!/bin/bash -l
 
@@ -164,11 +164,11 @@ JobId=9810704 JobName=TG_Pver_multi
    MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
    Features=(null) DelayBoot=00:00:00
    OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
-   Command=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/TG_Pver_multithread.sh
-   WorkDir=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
-   StdErr=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/2022-11-03_TrimGalore_Pver_multithread.txt
+   Command=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData/TG_Pver_multithread.sh
+   WorkDir=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData
+   StdErr=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData/2022-11-03_TrimGalore_Pver_multithread.txt
    StdIn=/dev/null
-   StdOut=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/2022-11-03_TrimGalore_Pver_multithread.txt
+   StdOut=/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData/2022-11-03_TrimGalore_Pver_multithread.txt
    Power=
    MailUser=dbarshis@odu.edu MailType=END
 ```
@@ -279,7 +279,7 @@ Number of seqs over 500 for Pver_transcriptome_v1.0.fasta: 34526
 ```bash
 ####Pocillopora verrucosa
 [dbarshis@coreV2-25-044 ReferenceTranscriptome]$ pwd
-/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/ReferenceTranscriptome
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/ReferenceTranscriptome
 [dbarshis@coreV2-25-044 ReferenceTranscriptome]$ cat GenomeGenerate.sh 
 #!/bin/bash -l
 
@@ -352,7 +352,7 @@ Submitted batch job 9810894
 
 ```bash
 [dbarshis@coreV2-25-044 qualtrimmedfastqs]$ pwd
-/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData/qualtrimmedfastqs
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData/qualtrimmedfastqs
 [dbarshis@coreV2-25-044 qualtrimmedfastqs]$ cat PverStar.sh 
 #!/bin/bash -l
 
@@ -367,7 +367,7 @@ enable_lmod
 
 module load container_env star
 
-for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/ReferenceTranscriptome/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2BuitragoPver`; done
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/ReferenceTranscriptome/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2BuitragoPver`; done
 [dbarshis@coreV2-25-044 qualtrimmedfastqs]$ sbatch PverStar.sh 
 Submitted batch job 9810895
 ```
@@ -408,12 +408,12 @@ The following have been reloaded with a version change:
 
 ```bash
 [dbarshis@coreV2-25-041 2022-11_AmSamBMKData]$ pwd
-/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData
 [dbarshis@coreV2-25-041 2022-11_AmSamBMKData]$ crun multiqc ./
 
   /// MultiQC 🔍 | v1.13
 
-|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopra_verrucosa/2022-11_AmSamBMKData
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData
 |         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 481/481  
 |              star | Found 28 reports
 |          cutadapt | Found 56 reports
@@ -476,3 +476,273 @@ for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/bar
 Submitted batch job 9810967
 ```
 
+## 2022-11-07_STARing Mgris/Plob
+
+  * genome format Mcap
+
+```bash
+[dbarshis@turing1 M_capitata_Stephens-Bhattacharya_v3]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/ReferenceTranscriptome/M_capitata_Stephens-Bhattacharya_v3
+[dbarshis@turing1 M_capitata_Stephens-Bhattacharya_v3]$ cat McapGenomeGenerate.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_McapgenomeGenerate.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Mcapgenomegenerate
+
+enable_lmod
+
+module load container_env star
+
+STAR --runMode genomeGenerate --runThreadN 4 --genomeDir ./ --genomeFastaFiles Montipora_capitata_SteBhat_cds.fasta --genomeChrBinNbits 16
+
+[dbarshis@turing1 M_capitata_Stephens-Bhattacharya_v3]$ sbatch McapGenomeGenerate.sh 
+Submitted batch job 9811093
+```
+
+  * now Star aligning to Mcap
+
+```bash
+[dbarshis@turing1 qualtrimmedfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/2022-11_AmSam_BMKData/qualtrimmedfastqs
+[dbarshis@turing1 qualtrimmedfastqs]$ cat StarMgri.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_MgriSTARMapping.txt
+#SBATCH -n 16
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=STARMgri
+
+enable_lmod
+
+module load container_env star
+
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/ReferenceTranscriptome/M_capitata_Stephens-Bhattacharya_v3/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2SteBhaMcap`; done
+
+[dbarshis@turing1 qualtrimmedfastqs]$ sbatch StarMgri.sh 
+Submitted batch job 9811223
+```
+
+  * comparing VoolstraPlut and KenkelPlob
+  * formatting
+
+```bash
+####Formatting plut
+[dbarshis@coreV2-25-031 VoolstraPlut]$ pwd 
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/ReferenceTranscriptome/VoolstraPlut
+[dbarshis@coreV2-25-031 VoolstraPlut]$ cat PlutGenomeGenerate.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_PlutgenomeGenerate.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Plutgenomegenerate
+
+enable_lmod
+
+module load container_env star
+
+STAR --runMode genomeGenerate --runThreadN 4 --genomeDir ./ --genomeFastaFiles  plut2v1.1.transcripts.fasta --genomeChrBinNbits 16
+[dbarshis@coreV2-25-031 VoolstraPlut]$ sbatch PlutGenomeGenerate.sh 
+Submitted batch job 9811233
+
+#### Formatting Plob
+[dbarshis@coreV2-25-031 KenkelPlob]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/ReferenceTranscriptome/KenkelPlob
+[dbarshis@coreV2-25-031 KenkelPlob]$ cat PlobGenomeGenerate.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_PlobgenomeGenerate.txt
+#SBATCH -n 4
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=Plobgenomegenerate
+
+enable_lmod
+
+module load container_env star
+
+STAR --runMode genomeGenerate --runThreadN 4 --genomeDir ./ --genomeFastaFiles  plob_LongestContig.fasta --genomeChrBinNbits 16
+[dbarshis@coreV2-25-031 KenkelPlob]$ sbatch PlobGenomeGenerate.sh 
+Submitted batch job 9811235
+```
+
+  * now aligning 2 Voolstra Plut
+
+```bash
+[dbarshis@coreV2-25-031 qualtrimmedfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData/qualtrimmedfastqs
+[dbarshis@coreV2-25-031 qualtrimmedfastqs]$ cat StarPlut.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_PlutSTARMapping.txt
+#SBATCH -n 16
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=STARPlut
+
+enable_lmod
+
+module load container_env star
+
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/ReferenceTranscriptome/VoolstraPlut/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2VoolPlut`; done
+
+[dbarshis@coreV2-25-031 qualtrimmedfastqs]$ sbatch StarPlut.sh 
+Submitted batch job 9811239
+```
+
+  * now aligning 2 Kenkel Plob
+
+```bash
+[dbarshis@coreV2-25-031 qualtrimmedfastqs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData/qualtrimmedfastqs
+[dbarshis@coreV2-25-031 qualtrimmedfastqs]$ cat StarPlob.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_PlobSTARMapping.txt
+#SBATCH -n 16
+#SBATCH -N 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=STARPlob
+
+enable_lmod
+
+module load container_env star
+
+for i in *_R1_val_1.fq.gz ; do `STAR --genomeDir /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/ReferenceTranscriptome/KenkelPlob/ --runThreadN 16 --outSAMattributes All --outSAMattrRGline ID:${i%_TF_R1_val_1.fq.gz} --genomeLoad LoadAndRemove --outFilterType Normal  --outFilterMismatchNoverLmax 0.03 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical --outSAMtype BAM Unsorted --limitBAMsortRAM 5784458574 --readFilesCommand zcat --outReadsUnmapped Fastx --outFilterMatchNminOverLread 0.2 --outFilterScoreMinOverLread 0.2 --readFilesIn $i ${i%_R1_val_1.fq.gz}_R2_val_2.fq.gz --outFileNamePrefix ${i%_R1_val_1.fq.gz}_2KenkPlob`; done
+[dbarshis@coreV2-25-031 qualtrimmedfastqs]$ sbatch StarPlob.sh 
+Submitted batch job 9811240
+```
+
+  * Starting genotyping on Ahya
+
+```bash
+#### Need to index fasta files
+[dbarshis@coreV2-25-031 ReferenceTranscriptome]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome
+[dbarshis@coreV2-25-031 qualtrimedfastqs]$ module load container_env samtools
+[dbarshis@coreV2-25-031 ReferenceTranscriptome]$ crun samtools faidx Ahyacinthus_transcripts_over500_Lopez-Nandam.fasta
+[dbarshis@coreV2-25-031 Barshis-Palumbi]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/Barshis-Palumbi
+[dbarshis@coreV2-25-031 Barshis-Palumbi]$ crun samtools faidx 33496_Ahyacinthus_CoralContigs_suffixed.fasta
+
+#### Need to sort BAMs and index sorted BAMs
+#### BarPal
+[dbarshis@turing1 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Barshis-Palumbi/BAMs
+[dbarshis@turing1 BAMs]$ cat BamSortIdx.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_AhyaBarPalSortIdx.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=AhyaBarPalSortIdx
+
+enable_lmod
+
+module load container_env samtools
+for i in *.out.bam; do `crun samtools sort -O bam -o ${i%.out.bam}_sorted.bam $i`; done
+for i in *_sorted.bam; do `crun samtools index $i`; done
+
+[dbarshis@turing1 BAMs]$ sbatch BamSortIdx.sh 
+Submitted batch job 9811248
+
+####Lopez-Nandam
+[dbarshis@coreV2-25-031 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Lopez-Nandam/BAMs
+[dbarshis@coreV2-25-031 BAMs]$ cat LopezBamSortIdx.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_AhyaLopezSortIdx.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=AhyaLopezSortIdx
+
+enable_lmod
+
+module load container_env samtools
+for i in *.out.bam; do `crun samtools sort -O bam -o ${i%.out.bam}_sorted.bam $i`; done
+for i in *_sorted.bam; do `crun samtools index $i`; done
+
+[dbarshis@coreV2-25-031 BAMs]$ sbatch LopezBamSortIdx.sh 
+Submitted batch job 9811252
+
+#### Now vcf-ing
+[dbarshis@coreV2-22-036 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Barshis-Palumbi/BAMs
+[dbarshis@coreV2-22-036 BAMs]$ cat BarPalVCFing.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_AhyaBarPalSNPing.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=AhyaBarPalSNP
+
+enable_lmod
+module load container_env bcftools
+
+crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/Barshis-Palumbi/33496_Ahyacinthus_CoralContigs_suffixed.fasta *_sorted.bam | crun bcftools call -Ou -mv | crun bcftools filter -O z -s LowQual -e "QUAL<30 || DP>100" > Ahya_2BarPal_var.flt.vcf.gz
+
+[dbarshis@coreV2-22-036 BAMs]$ sbatch BarPalVCFing.sh 
+Submitted batch job 9811255
+
+###also trying with no -O z option just in case
+[dbarshis@coreV2-22-036 BAMs]$ cat BarPalVCFnoz.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_AhyaBarPalSNPing_noZ.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=NoZAhyaBarPalSNP
+
+enable_lmod
+module load container_env bcftools
+
+crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/ReferenceTranscriptome/Barshis-Palumbi/33496_Ahyacinthus_CoralContigs_suffixed.fasta *_sorted.bam | crun bcftools call -Ou -mv | crun bcftools filter -s LowQual -e "QUAL<30 || DP>100" > Ahya_2BarPal_var_noZ.flt.vcf
+[dbarshis@coreV2-22-036 BAMs]$ sbatch BarPalVCFnoz.sh 
+Submitted batch job 9811260
+```
+
+  * starting on Pver
+
+```bash
+####indexing .fasta
+[dbarshis@turing1 ReferenceTranscriptome]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/ReferenceTranscriptome
+[dbarshis@turing1 ReferenceTranscriptome]$ crun samtools faidx Pver_transcriptome_v1.0_over500.fasta
+
+#### Sorting BAMs and index sorted BAMs
+[dbarshis@coreV2-22-036 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData/mapping/BAMs
+[dbarshis@coreV2-22-036 BAMs]$ cat PverBamSortIdx.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-07_PverSortIdx.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=PverSortIdx
+
+enable_lmod
+
+module load container_env samtools
+for i in *.out.bam; do `crun samtools sort -O bam -o ${i%.out.bam}_sorted.bam $i`; done
+for i in *_sorted.bam; do `crun samtools index $i`; done
+
+[dbarshis@coreV2-22-036 BAMs]$ sbatch PverBamSortIdx.sh 
+Submitted batch job 9811251
+```
