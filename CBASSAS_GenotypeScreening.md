@@ -767,3 +767,688 @@ crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/
 [dbarshis@coreV2-22-036 BAMs]$ sbatch LopezVCFing.sh 
 Submitted batch job 9811264
 ```
+
+## 2022-11-08_VCFFiltering Ahya2Lopez
+
+```bash
+[dbarshis@turing1 Lopez-Nandam]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Lopez-Nandam/BAMs
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf Ahya_2Lopez_var_noZ.flt.vcf --max-missing 0.5 --mac 3 --minQ 30 --minDP 10 --max-alleles 2 --maf 0.015 --remove-indels --recode --recode-INFO-all --out 244528_Ahya_2Lopez_HEAFiltersFinal
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Ahya_2Lopez_var_noZ.flt.vcf
+	--recode-INFO-all
+	--mac 3
+	--maf 0.015
+	--max-alleles 2
+	--minDP 10
+	--minQ 30
+	--max-missing 0.5
+	--out 244528_Ahya_2Lopez_HEAFiltersFinal
+	--recode
+	--remove-indels
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 16 out of 16 Individuals
+Outputting VCF file...
+After filtering, kept 244528 out of a possible 768593 Sites
+Run Time = 15.00 seconds
+
+####Looking at missing individuals
+[dbarshis@turing1 BAMs]$ vcftools --vcf 244528_Ahya_2Lopez_HEAFiltersFinal.recode.vcf --missing-indv
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 244528_Ahya_2Lopez_HEAFiltersFinal.recode.vcf
+	--missing-indv
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 16 out of 16 Individuals
+Outputting Individual Missingness
+After filtering, kept 244528 out of a possible 244528 Sites
+Run Time = 3.00 seconds
+[dbarshis@turing1 BAMs]$ cat out.imiss
+INDV	N_DATA	N_GENOTYPES_FILTERED	N_MISS	F_MISS
+20220219T1400_CBASS_AS_S2_Ahya_2_TF_2LopezAhyaAligned_sorted.bam	244528	0	29733	0.121593
+20220219T1400_CBASS_AS_S2_Ahya_5_TF_2LopezAhyaAligned_sorted.bam	244528	0	56925	0.232795
+20220219T1400_CBASS_AS_S2_Ahya_6_TF_2LopezAhyaAligned_sorted.bam	244528	0	17005	0.0695421
+20220219T1400_CBASS_AS_S2_Ahya_7_TF_2LopezAhyaAligned_sorted.bam	244528	0	22004	0.0899856
+20220219T1400_CBASS_AS_S2_Ahya_9_TF_2LopezAhyaAligned_sorted.bam	244528	0	52466	0.21456
+20220225T1400_CBASS_AS_S1_Ahya_10_TF_2LopezAhyaAligned_sorted.bam	244528	0	25144	0.102827
+20220225T1400_CBASS_AS_S1_Ahya_13_TF_2LopezAhyaAligned_sorted.bam	244528	0	41835	0.171085
+20220225T1400_CBASS_AS_S1_Ahya_14_TF_2LopezAhyaAligned_sorted.bam	244528	0	32593	0.133289
+20220225T1400_CBASS_AS_S1_Ahya_1_TF_2LopezAhyaAligned_sorted.bam	244528	0	15209	0.0621974
+20220225T1400_CBASS_AS_S1_Ahya_2_TF_2LopezAhyaAligned_sorted.bam	244528	0	69881	0.285779
+20220225T1400_CBASS_AS_S1_Ahya_3_TF_2LopezAhyaAligned_sorted.bam	244528	0	56888	0.232644
+20220225T1400_CBASS_AS_S1_Ahya_4_TF_2LopezAhyaAligned_sorted.bam	244528	0	11735	0.0479904
+20220225T1400_CBASS_AS_S1_Ahya_5_TF_2LopezAhyaAligned_sorted.bam	244528	0	25072	0.102532
+20220225T1400_CBASS_AS_S1_Ahya_6_TF_2LopezAhyaAligned_sorted.bam	244528	0	45281	0.185177
+20220225T1400_CBASS_AS_S1_Ahya_7_TF_2LopezAhyaAligned_sorted.bam	244528	0	48437	0.198084
+20220225T1400_CBASS_AS_S1_Ahya_9_TF_2LopezAhyaAligned_sorted.bam	244528	0	39957	0.163405
+
+##87844 loci genotyped in all individuals!
+[dbarshis@turing1 BAMs]$ vcftools --vcf 244528_Ahya_2Lopez_HEAFiltersFinal.recode.vcf --max-missing 1 --recode --recode-INFO-all --out 87844_Ahya_2Lopez_HEAFilters_allindividuals
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 244528_Ahya_2Lopez_HEAFiltersFinal.recode.vcf
+	--recode-INFO-all
+	--max-missing 1
+	--out 87844_Ahya_2Lopez_HEAFilters_allindividuals
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 16 out of 16 Individuals
+Outputting VCF file...
+After filtering, kept 87844 out of a possible 244528 Sites
+Run Time = 5.00 seconds
+
+####Transferring to laptop
+(base) danbarshis@BIOLLBB0 SNPTyping % pwd
+/Users/danbarshis/dansstuff/Research/2021-2024_GlobalSearch/2022-AmSam/Sequencing/2022-11_BMKGenoTypingData/SNPTyping
+(base) danbarshis@BIOLLBB0 SNPTyping % python2 ~/scripts/vcftogenepop_advbioinf.py 87844_Ahya_2Lopez_HEAFilters_allindividuals.recode.vcf Ahyapopfile.txt 
+Indivs with genotypes in vcf file: CBASS_AS_S2_Ahya_2	CBASS_AS_S2_Ahya_5	CBASS_AS_S2_Ahya_6	CBASS_AS_S2_Ahya_7	CBASS_AS_S2_Ahya_9	CBASS_AS_S1_Ahya_10	CBASS_AS_S1_Ahya_13	CBASS_AS_S1_Ahya_14	CBASS_AS_S1_Ahya_1	CBASS_AS_S1_Ahya_2	CBASS_AS_S1_Ahya_3	CBASS_AS_S1_Ahya_4	CBASS_AS_S1_Ahya_5	CBASS_AS_S1_Ahya_6	CBASS_AS_S1_Ahya_7	CBASS_AS_S1_Ahya_9
+20 87844 87844 87844 87844 16
+
+```
+  * running adegenet
+
+```R
+#Script written by Daniel Barshis, adapted by Hannah Aichelman, and re-adapted by Daniel Barshis
+#Last updated: 11/2022
+
+#This script takes genepop file formats (.gen) and uses principal components analyses and distance clustering to consider population structure and clonality
+
+#load required packages
+library(adegenet)
+library(poppr)
+library(gplots)
+library(RColorBrewer)
+
+#set working directory
+setwd("/Users/danbarshis/dansstuff/Research/2021-2024_GlobalSearch/2022-AmSam/Sequencing/2022-11_BMKGenoTypingData/SNPTyping/Ahya2Lopez")
+
+datafile28<-read.genepop('87844_Ahya_2Lopez_HEAFilters_allindividuals.recode_genepop.gen', ncode=2)
+
+sum(is.na(datafile28$tab))
+datafile28 #shows info
+YOURdata<-scaleGen(datafile28, NA.method='mean')
+X<-YOURdata
+##for 87844_16samples
+pca1 <- dudi.pca(X,cent=T, scale=T, scannf=F, nf=3)
+summary(pca1)
+propvar<-format(pca1$eig/sum(pca1$eig)*100, digits=1)
+
+#### PCAs ####
+# individual labels
+s.label(pca1$li)
+
+# population elipses
+s.class(pca1$li, pop(datafile28))
+
+#color symbols, pop names
+pdf("Ahya2Lopez_87844_16samples_ColorPCA1v2.pdf")
+Sytes<-c(rep("S2",5),rep("S1",9))
+datafile28$pop<-factor(datafile28$pop, Sytes)
+Colorz<-c('#2c7bb6','#fdae61')
+names(Colorz)<-levels(datafile28$pop)
+Syms<-c(19,17)
+names(Syms)<-levels(datafile28$pop)
+plot(pca1$li$Axis1, pca1$li$Axis2, col=Colorz[datafile28$pop], pch=Syms[datafile28$pop], xlim=c(min(pca1$li$Axis1),max(pca1$li$Axis1)), ylim=c(min(pca1$li$Axis2)-50,max(pca1$li$Axis2)+50), cex=3,xlab=paste("PC1, ",propvar[1],"% variance explained", sep=""), ylab=paste("PC2, ",propvar[2],"% variance explained)", sep=""), cex.axis=1.5, cex.lab=1.5)
+abline(v=0,h=0,col="grey", lty=2)
+legend("bottomright", c("S2","S1"), col=Colorz, pch=Syms, cex=1.5, pt.cex=3)
+dev.off()
+
+
+####Dissimilarity Distance####
+#Create a diss.dist dissimilarity distance matrix to determine a threshhold based on clones, https://www.rdocumentation.org/packages/poppr/versions/2.8.5/topics/diss.dist
+#ignores missing data and counts the shared genotypes 
+distgenDISS <- diss.dist(datafile28, percent = FALSE, mat = FALSE) 
+#make percent = TRUE to get Prevosti distance
+#By default, diss.dist() returns a distance reflecting the number of allelic differences between two individuals (Hamming's distance).
+
+distgenDISS2 <- as.matrix(distgenDISS)
+
+
+pdf("Ahya2Lopez_87844_16samples_distance-dendrogram.pdf")
+#Cluster with hclust and plot
+clust_tree<-hclust(distgenDISS, "ave")
+plot(clust_tree, cex=0.4)+abline(h=50)
+dev.off()
+
+```
+
+  * running on Ahya2BarPal
+
+```bash
+[dbarshis@turing1 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData/mapping/Barshis-Palumbi/BAMs
+[dbarshis@turing1 BAMs]$ enable_lmod
+
+The following have been reloaded with a version change:
+  1) slurm/20.11.5 => slurm/21.08
+
+[dbarshis@turing1 BAMs]$ module load vcftools
+
+The following have been reloaded with a version change:
+  1) sge/2011.11p1 => sge/2011
+
+[dbarshis@turing1 BAMs]$ vcftools --vcf Ahya_2BarPal_var_noZ.flt.vcf 
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Ahya_2BarPal_var_noZ.flt.vcf
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 16 out of 16 Individuals
+After filtering, kept 498829 out of a possible 498829 Sites
+Run Time = 4.00 seconds
+
+### HEAFilters
+[dbarshis@turing1 BAMs]$ vcftools --vcf Ahya_2BarPal_var_noZ.flt.vcf --max-missing 0.5 --mac 3 --minQ 30 --minDP 10 --max-alleles 2 --maf 0.015 --remove-indels --recode --recode-INFO-all --out 173230_Ahya_2BarPal_var.vcf
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Ahya_2BarPal_var_noZ.flt.vcf
+	--recode-INFO-all
+	--mac 3
+	--maf 0.015
+	--max-alleles 2
+	--minDP 10
+	--minQ 30
+	--max-missing 0.5
+	--out 173230_Ahya_2BarPal_var.vcf
+	--recode
+	--remove-indels
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 16 out of 16 Individuals
+Outputting VCF file...
+After filtering, kept 173230 out of a possible 498829 Sites
+Run Time = 12.00 seconds
+
+### max missing 1
+[dbarshis@turing1 BAMs]$ vcftools --vcf 173230_Ahya_2BarPal_var.vcf.recode.vcf --max-missing 1 --recode --recode-INFO-all --out 76942_Ahya_2BarPal_var
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 173230_Ahya_2BarPal_var.vcf.recode.vcf
+	--recode-INFO-all
+	--max-missing 1
+	--out 76942_Ahya_2BarPal_var
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 16 out of 16 Individuals
+Outputting VCF file...
+After filtering, kept 76942 out of a possible 173230 Sites
+Run Time = 5.00 seconds
+
+##Transferring to laptop
+(base) danbarshis@BIOLLBB0 Ahya2BarPal % pwd
+/Users/danbarshis/dansstuff/Research/2021-2024_GlobalSearch/2022-AmSam/Sequencing/2022-11_BMKGenoTypingData/SNPTyping/Ahya2BarPal
+(base) danbarshis@BIOLLBB0 Ahya2BarPal % python2 ~/scripts/vcftogenepop_advbioinf.py 76942_Ahya_2BarPal_var.recode.vcf Popfile.txt 
+Indivs with genotypes in vcf file: CBASS_AS_S2_Ahya_2	CBASS_AS_S2_Ahya_5	CBASS_AS_S2_Ahya_6	CBASS_AS_S2_Ahya_7	CBASS_AS_S2_Ahya_9	CBASS_AS_S1_Ahya_10	CBASS_AS_S1_Ahya_13	CBASS_AS_S1_Ahya_14	CBASS_AS_S1_Ahya_1	CBASS_AS_S1_Ahya_2	CBASS_AS_S1_Ahya_3	CBASS_AS_S1_Ahya_4	CBASS_AS_S1_Ahya_5	CBASS_AS_S1_Ahya_6	CBASS_AS_S1_Ahya_7	CBASS_AS_S1_Ahya_9
+20 76942 76942 76942 76942 16
+```
+
+  * now adegenet
+
+```R
+#Script written by Daniel Barshis, adapted by Hannah Aichelman, and re-adapted by Daniel Barshis
+#Last updated: 11/2022
+
+#This script takes genepop file formats (.gen) and uses principal components analyses and distance clustering to consider population structure and clonality
+
+#load required packages
+library(adegenet)
+library(poppr)
+library(gplots)
+library(RColorBrewer)
+
+#set working directory
+setwd("/Users/danbarshis/dansstuff/Research/2021-2024_GlobalSearch/2022-AmSam/Sequencing/2022-11_BMKGenoTypingData/Acropora_hyacinthus/SNPTyping/Ahya2BarPal")
+
+datafile<-read.genepop('76942_Ahya_2BarPal_var.recode_genepop.gen', ncode=2)
+
+sum(is.na(datafile$tab))
+datafile #shows info
+YOURdata<-scaleGen(datafile, NA.method='mean')
+X<-YOURdata
+##for 76942_16samples
+pca1 <- dudi.pca(X,cent=T, scale=T, scannf=F, nf=3)
+summary(pca1)
+propvar<-format(pca1$eig/sum(pca1$eig)*100, digits=1)
+
+#### PCAs ####
+# individual labels
+s.label(pca1$li)
+
+# population elipses
+s.class(pca1$li, pop(datafile))
+
+#color symbols, pop names
+pdf("Ahya2BarPal_76942_16samples_ColorPCA1v2.pdf")
+Sytes<-c(rep("S2",5),rep("S1",9))
+datafile$pop<-factor(datafile$pop, Sytes)
+Colorz<-c('#2c7bb6','#fdae61')
+names(Colorz)<-levels(datafile$pop)
+Syms<-c(19,17)
+names(Syms)<-levels(datafile$pop)
+plot(pca1$li$Axis1, pca1$li$Axis2, col=Colorz[datafile$pop], pch=Syms[datafile$pop], xlim=c(min(pca1$li$Axis1),max(pca1$li$Axis1)), ylim=c(min(pca1$li$Axis2)-50,max(pca1$li$Axis2)+50), cex=3,xlab=paste("PC1, ",propvar[1],"% variance explained", sep=""), ylab=paste("PC2, ",propvar[2],"% variance explained)", sep=""), cex.axis=1.5, cex.lab=1.5)
+abline(v=0,h=0,col="grey", lty=2)
+legend("bottomright", c("S2","S1"), col=Colorz, pch=Syms, cex=1.5, pt.cex=3)
+dev.off()
+
+
+####Dissimilarity Distance####
+#Create a diss.dist dissimilarity distance matrix to determine a threshhold based on clones, https://www.rdocumentation.org/packages/poppr/versions/2.8.5/topics/diss.dist
+#ignores missing data and counts the shared genotypes 
+distgenDISS <- diss.dist(datafile, percent = FALSE, mat = FALSE) 
+#make percent = TRUE to get Prevosti distance
+#By default, diss.dist() returns a distance reflecting the number of allelic differences between two individuals (Hamming's distance).
+
+distgenDISS2 <- as.matrix(distgenDISS)
+
+
+pdf("Ahya2BarPal_76942_16samples_distance-dendrogram.pdf")
+#Cluster with hclust and plot
+clust_tree<-hclust(distgenDISS, "ave")
+plot(clust_tree, cex=0.4)+abline(h=50)
+dev.off()
+```
+
+  * VCFing Pver
+
+```bash
+[dbarshis@coreV1-22-015 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData/mapping/BAMs
+[dbarshis@coreV1-22-015 BAMs]$ cat PverBuitVCFing.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-08_PverBuitSNPing.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=PverBuitSNP
+
+enable_lmod
+module load container_env bcftools
+
+crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/ReferenceTranscriptome/Pver_transcriptome_v1.0_over500.fasta *_sorted.bam | crun bcftools call -Ou -mv | crun bcftools filter -s LowQual -e "QUAL<30 || DP>100" > Pver_2Buit_var.flt.vcf
+[dbarshis@coreV1-22-015 BAMs]$ sbatch PverBuitVCFing.sh 
+Submitted batch job 9811319
+```
+
+  * SortIndexing Mgris
+
+```bash
+[dbarshis@coreV1-22-015 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/2022-11_AmSam_BMKData/mapping/BAMs
+[dbarshis@coreV1-22-015 BAMs]$ cat BamSortIdx.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-08_McapSortIdx.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=MacpSortIdx
+
+enable_lmod
+
+module load container_env samtools
+for i in *.out.bam; do `crun samtools sort -O bam -o ${i%.out.bam}_sorted.bam $i`; done
+for i in *_sorted.bam; do `crun samtools index $i`; done
+
+[dbarshis@coreV1-22-015 BAMs]$ sbatch BamSortIdx.sh 
+Submitted batch job 9811320
+```
+
+  * PlobPlut SortIdx
+
+```bash
+####Plob
+[dbarshis@coreV1-22-015 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData/mapping/KenkPlob/BAMs
+[dbarshis@coreV1-22-015 BAMs]$ cat KenkPlobSortIdx.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-08_PlobKenkSortIdx.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=PlobKenkSortIdx
+
+enable_lmod
+
+module load container_env samtools
+for i in *.out.bam; do `crun samtools sort -O bam -o ${i%.out.bam}_sorted.bam $i`; done
+for i in *_sorted.bam; do `crun samtools index $i`; done
+
+[dbarshis@coreV1-22-015 BAMs]$ sbatch KenkPlobSortIdx.sh 
+Submitted batch job 9811321
+
+####Plut
+[dbarshis@coreV1-22-015 VoolstraPlut]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/ReferenceTranscriptome/VoolstraPlut
+[dbarshis@coreV1-22-015 VoolstraPlut]$ crun samtools faidx plut2v1.1.transcripts.fasta 
+[dbarshis@coreV1-22-015 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData/mapping/VoolPlut/BAMs
+[dbarshis@coreV1-22-015 BAMs]$ cat VoolPlutSortIdx.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-08_PlutVoolSortIdx.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=PlutVoolSortIdx
+
+enable_lmod
+
+module load container_env samtools
+for i in *.out.bam; do `crun samtools sort -O bam -o ${i%.out.bam}_sorted.bam $i`; done
+for i in *_sorted.bam; do `crun samtools index $i`; done
+
+[dbarshis@coreV1-22-015 BAMs]$ sbatch VoolPlutSortIdx.sh 
+Submitted batch job 9811322
+```
+
+  * VCFing Mgris
+
+```bash
+[dbarshis@coreV1-22-015 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/2022-11_AmSam_BMKData/mapping/BAMs
+[dbarshis@coreV1-22-015 BAMs]$ cat Mgris2McapSteBhatVCF.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-08_MgrisSteBhaSNPing.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=MgrisSteBhaSNP
+
+enable_lmod
+module load container_env bcftools
+
+crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/ReferenceTranscriptome/M_capitata_Stephens-Bhattacharya_v3/Montipora_capitata_SteBhat_cds.fasta *_sorted.bam | crun bcftools call -Ou -mv | crun bcftools filter -s LowQual -e "QUAL<30 || DP>100" > Mgri_2SteBha_var.flt.vcf
+[dbarshis@coreV1-22-015 BAMs]$ sbatch Mgris2McapSteBhatVCF.sh 
+Submitted batch job 9811330
+```
+
+  * VCFing PlobPlut
+
+```bash
+[dbarshis@coreV1-22-015 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData/mapping/VoolPlut/BAMs
+[dbarshis@coreV1-22-015 BAMs]$ cat PlobVoolPlutVCF.sh 
+#!/bin/bash -l
+
+#SBATCH -o 2022-11-08_PlobVoolPlutSNPing.txt
+#SBATCH -n 1
+#SBATCH --mail-user=dbarshis@odu.edu
+#SBATCH --mail-type=END
+#SBATCH --job-name=PlobVoolPlutSNP
+
+enable_lmod
+module load container_env bcftools
+
+crun bcftools mpileup -Ou -f /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/ReferenceTranscriptome/VoolstraPlut/plut2v1.1.transcripts.fasta *_sorted.bam | crun bcftools call -Ou -mv | crun bcftools filter -s LowQual -e "QUAL<30 || DP>100" > Plob_2VoolPlut_var.flt.vcf
+
+[dbarshis@coreV1-22-015 BAMs]$ sbatch PlobVoolPlutVCF.sh 
+Submitted batch job 9811328
+
+```
+
+## 2022-11-09_MultiQCing species by species
+
+  * Acropora hyacinthus
+
+```bash
+[dbarshis@coreV2-22-036 2022-11_AmSam_BMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData
+[dbarshis@coreV2-22-036 2022-11_AmSam_BMKData]$ crun multiqc ./
+
+  /// MultiQC 🔍 | v1.13
+
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Acropora_hyacinthus/2022-11_AmSam_BMKData
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 481/481  
+|              star | Found 32 reports
+|          cutadapt | Found 32 reports
+|            fastqc | Found 32 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
+```
+
+  * Pocillopora_verrucosa
+
+```bash
+[dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData
+[dbarshis@coreV2-22-036 2022-11_AmSamBMKData]$ crun multiqc ./
+
+  /// MultiQC 🔍 | v1.13
+
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Pocillopora_verrucosa/2022-11_AmSamBMKData
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 542/542  
+|              star | Found 28 reports
+|          cutadapt | Found 56 reports
+|            fastqc | Found 56 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
+```
+
+  * Porites_lobata
+
+```bash
+[dbarshis@coreV2-22-036 2022-11_AmSam_BMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData
+[dbarshis@coreV2-22-036 2022-11_AmSam_BMKData]$ crun multiqc ./
+
+  /// MultiQC 🔍 | v1.13
+
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 545/545  
+|              star | Found 38 reports
+|          cutadapt | Found 70 reports
+|            fastqc | Found 38 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
+```
+
+  * Montipora_grisea
+
+```bash
+[dbarshis@coreV2-22-036 2022-11_AmSam_BMKData]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/2022-11_AmSam_BMKData
+[dbarshis@coreV2-22-036 2022-11_AmSam_BMKData]$ crun multiqc ./
+
+  /// MultiQC 🔍 | v1.13
+
+|           multiqc | Search path : /cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/2022-11_AmSam_BMKData
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 503/503  
+|              star | Found 26 reports
+|          cutadapt | Found 52 reports
+|            fastqc | Found 52 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
+```
+
+  * SNP results from M_gris
+
+```bash
+[dbarshis@coreV2-25-031 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Montipora_grisea/2022-11_AmSam_BMKData/mapping/BAMs
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf Mgri_2SteBha_var.flt.vcf 
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Mgri_2SteBha_var.flt.vcf
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 26 out of 26 Individuals
+After filtering, kept 1611826 out of a possible 1611826 Sites
+Run Time = 14.00 seconds
+
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf Mgri_2SteBha_var.flt.vcf --max-missing 0.5 --mac 3 --minQ 30 --minDP 10 --max-alleles 2 --maf 0.015 --remove-indels --recode --recode-INFO-all --out 425841_Mgri_2SteBha_var
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Mgri_2SteBha_var.flt.vcf
+	--recode-INFO-all
+	--mac 3
+	--maf 0.015
+	--max-alleles 2
+	--minDP 10
+	--minQ 30
+	--max-missing 0.5
+	--out 425841_Mgri_2SteBha_var
+	--recode
+	--remove-indels
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 26 out of 26 Individuals
+Outputting VCF file...
+After filtering, kept 425841 out of a possible 1611826 Sites
+Run Time = 39.00 seconds
+
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf 425841_Mgri_2SteBha_var.recode.vcf --max-missing 1 --recode --recode-INFO-all --out 89262_Mgri_2SteBha_all
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 425841_Mgri_2SteBha_var.recode.vcf
+	--recode-INFO-all
+	--max-missing 1
+	--out 89262_Mgri_2SteBha_all
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 26 out of 26 Individuals
+Outputting VCF file...
+After filtering, kept 89262 out of a possible 425841 Sites
+Run Time = 10.00 seconds
+
+(base) danbarshis@BIOLLBB0 SNP_results % pwd    
+/Users/danbarshis/dansstuff/Research/2021-2024_GlobalSearch/2022-AmSam/Sequencing/2022-11_BMKGenoTypingData/Montipora_grisea/SNP_results
+(base) danbarshis@BIOLLBB0 SNP_results % python2 ~/scripts/vcftogenepop_advbioinf.py 89262_Mgri_2SteBha_all.recode.vcf popfile.txt 
+Indivs with genotypes in vcf file: CBASS_AS_S2_Mgri_10	CBASS_AS_S2_Mgri_11	CBASS_AS_S2_Mgri_12	CBASS_AS_S2_Mgri_13	CBASS_AS_S2_Mgri_14	CBASS_AS_S2_Mgri_1	CBASS_AS_S2_Mgri_2	CBASS_AS_S2_Mgri_3	CBASS_AS_S2_Mgri_4	CBASS_AS_S2_Mgri_5	CBASS_AS_S2_Mgri_6	CBASS_AS_S2_Mgri_7	CBASS_AS_S2_Mgri_8	CBASS_AS_S2_Mgri_9	CBASS_AS_S1_Mgri_10	CBASS_AS_S1_Mgri_11	CBASS_AS_S1_Mgri_12	CBASS_AS_S1_Mgri_1	CBASS_AS_S1_Mgri_2	CBASS_AS_S1_Mgri_3	CBASS_AS_S1_Mgri_4	CBASS_AS_S1_Mgri_5	CBASS_AS_S1_Mgri_6	CBASS_AS_S1_Mgri_7	CBASS_AS_S1_Mgri_8	CBASS_AS_S1_Mgri_9
+30 89262 89262 89262 89262 26
+```
+
+  * SNP results from Plob
+
+```bash
+[dbarshis@coreV2-25-031 BAMs]$ pwd
+/cm/shared/courses/dbarshis/barshislab/danb/taxons/Porites_lobata/2022-11_AmSam_BMKData/mapping/VoolPlut/BAMs
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf Plob_2VoolPlut_var.flt.vcf 
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Plob_2VoolPlut_var.flt.vcf
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 19 out of 19 Individuals
+After filtering, kept 2448543 out of a possible 2448543 Sites
+Run Time = 18.00 seconds
+
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf Plob_2VoolPlut_var.flt.vcf --max-missing 0.5 --mac 3 --minQ 30 --minDP 10 --max-alleles 2 --maf 0.015 --remove-indels --recode --recode-INFO-all --out 880067_Plob_2VoolPlut
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Plob_2VoolPlut_var.flt.vcf
+	--recode-INFO-all
+	--mac 3
+	--maf 0.015
+	--max-alleles 2
+	--minDP 10
+	--minQ 30
+	--max-missing 0.5
+	--out 880067_Plob_2VoolPlut
+	--recode
+	--remove-indels
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 19 out of 19 Individuals
+Outputting VCF file...
+After filtering, kept 880067 out of a possible 2448543 Sites
+Run Time = 57.00 seconds
+
+[dbarshis@coreV2-25-031 BAMs]$ vcftools --vcf 880067_Plob_2VoolPlut.recode.vcf --max-missing 1 --recode --recode-INFO-all --out 179099_Plob_2VoolPlut_all
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf 880067_Plob_2VoolPlut.recode.vcf
+	--recode-INFO-all
+	--max-missing 1
+	--out 179099_Plob_2VoolPlut_all
+	--recode
+
+Warning: Expected at least 2 parts in INFO entry: ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+Warning: Expected at least 2 parts in INFO entry: ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+After filtering, kept 19 out of 19 Individuals
+Outputting VCF file...
+After filtering, kept 179099 out of a possible 880067 Sites
+Run Time = 16.00 seconds
+(base) danbarshis@BIOLLBB0 SNP_results % pwd   
+/Users/danbarshis/dansstuff/Research/2021-2024_GlobalSearch/2022-AmSam/Sequencing/2022-11_BMKGenoTypingData/Porites_lobata/SNP_results
+(base) danbarshis@BIOLLBB0 SNP_results % python2 ~/scripts/vcftogenepop_advbioinf.py 179099_Plob_2VoolPlut_all.recode.vcf popfile.txt 
+Indivs with genotypes in vcf file: CBASS_AS_S2_Plob_10	CBASS_AS_S2_Plob_11	CBASS_AS_S2_Plob_12	CBASS_AS_S2_Plob_1	CBASS_AS_S2_Plob_2	CBASS_AS_S2_Plob_4	CBASS_AS_S2_Plob_5	CBASS_AS_S2_Plob_6	CBASS_AS_S2_Plob_7	CBASS_AS_S2_Plob_8	CBASS_AS_S2_Plob_9	CBASS_AS_S1_Plob_10	CBASS_AS_S1_Plob_11	CBASS_AS_S1_Plob_12	CBASS_AS_S1_Plob_4	CBASS_AS_S1_Plob_5	CBASS_AS_S1_Plob_6	CBASS_AS_S1_Plob_7	CBASS_AS_S1_Plob_9
+23 179099 179099 179099 179099 19
+```
+
+
